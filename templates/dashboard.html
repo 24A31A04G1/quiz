@@ -1,0 +1,1996 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Quiz Arena | Dashboard
+</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+:root {
+
+    --bg: #070914;
+
+    --panel: #101425;
+
+    --panel2: #151a2d;
+
+    --border:
+        rgba(255,255,255,0.08);
+
+    --text: #f7f8ff;
+
+    --muted: #8d96ad;
+
+    --primary: #765cff;
+
+    --primary2: #9b82ff;
+
+    --green: #2dd4a0;
+
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial, sans-serif;
+
+    color: var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(118,92,255,0.2),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(45,212,160,0.07),
+            transparent 25%
+        ),
+
+        var(--bg);
+
+}
+
+
+.header {
+
+    max-width: 1180px;
+
+    margin: auto;
+
+    padding:
+        25px 22px 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 15px;
+
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.logo {
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary2)
+        );
+
+}
+
+
+.brand h1 {
+
+    font-size: 20px;
+
+}
+
+
+.brand p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 3px;
+
+}
+
+
+.logout {
+
+    padding: 10px 15px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    color: #ddd;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    cursor: pointer;
+
+}
+
+
+.container {
+
+    max-width: 1180px;
+
+    margin: auto;
+
+    padding:
+        15px 22px 50px;
+
+}
+
+
+.profile {
+
+    padding: 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 22px;
+
+    background:
+        rgba(16,20,37,0.86);
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+.profile h2 {
+
+    font-size: 25px;
+
+}
+
+
+.profile p {
+
+    color: var(--muted);
+
+    margin-top: 7px;
+
+    font-size: 12px;
+
+}
+
+
+.stats {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+.stat {
+
+    min-width: 100px;
+
+    padding: 15px;
+
+    border-radius: 13px;
+
+    text-align: center;
+
+    background:
+        rgba(118,92,255,0.08);
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+.stat strong {
+
+    display: block;
+
+    font-size: 20px;
+
+}
+
+
+.stat span {
+
+    font-size: 10px;
+
+    color: var(--muted);
+
+}
+
+
+.tabs {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin:
+        24px 0 16px;
+
+}
+
+
+.tab {
+
+    padding: 11px 16px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.03);
+
+    color: #bfc5d6;
+
+    cursor: pointer;
+
+}
+
+
+.tab.active {
+
+    background:
+        rgba(118,92,255,0.15);
+
+    border-color:
+        rgba(118,92,255,0.45);
+
+    color: white;
+
+}
+
+
+.section {
+
+    display: none;
+
+}
+
+
+.section.active {
+
+    display: block;
+
+}
+
+
+.section-title {
+
+    font-size: 17px;
+
+    margin-bottom: 14px;
+
+}
+
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(270px,1fr)
+        );
+
+    gap: 15px;
+
+}
+
+
+.quiz-card {
+
+    padding: 22px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+
+    background:
+        rgba(16,20,37,0.9);
+
+    transition: 0.2s;
+
+}
+
+
+.quiz-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(118,92,255,0.35);
+
+}
+
+
+.quiz-card h3 {
+
+    font-size: 17px;
+
+}
+
+
+.quiz-card p {
+
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    min-height: 38px;
+
+}
+
+
+.meta {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    margin: 15px 0;
+
+}
+
+
+.pill {
+
+    padding: 6px 9px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    color: #c5cbda;
+
+    font-size: 10px;
+
+}
+
+
+.pill.done {
+
+    color: #77e4c2;
+
+    background:
+        rgba(45,212,160,0.09);
+
+}
+
+
+.start {
+
+    width: 100%;
+
+    height: 42px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #8d70ff
+        );
+
+    font-weight: 850;
+
+    cursor: pointer;
+
+}
+
+
+.start.done {
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #9ca4b7;
+
+    cursor: default;
+
+}
+
+
+.empty {
+
+    padding: 35px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    border:
+        1px dashed var(--border);
+
+    border-radius: 16px;
+
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+    background:
+        rgba(16,20,37,0.85);
+
+}
+
+
+th,
+td {
+
+    text-align: left;
+
+    padding: 14px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-size: 12px;
+
+}
+
+
+th {
+
+    color: #aeb6ca;
+
+    font-size: 10px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+td {
+
+    color: #dce0ea;
+
+}
+
+
+tr:last-child td {
+
+    border-bottom: 0;
+
+}
+
+
+.score {
+
+    font-weight: 900;
+
+    color: #8fe8cb;
+
+}
+
+
+
+/* =========================================================
+   RESULTS / WINNERS / LEADERBOARD
+   ========================================================= */
+
+.notice-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:15px;
+    margin-top:16px;
+}
+
+.notice-card{
+    padding:22px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(16,20,37,0.9);
+}
+
+.notice-card h4{
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.notice-card p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.6;
+    margin-bottom:14px;
+}
+
+.notice-card.hidden{
+    opacity:.72;
+}
+
+.notice-badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:8px;
+    font-size:9px;
+    font-weight:800;
+    margin-bottom:12px;
+    background:rgba(118,92,255,.12);
+    color:#c8bfff;
+}
+
+.notice-badge.live{
+    background:rgba(45,212,160,.10);
+    color:#77e4c2;
+}
+
+.notice-content{
+    margin-top:12px;
+}
+
+.winner-list{
+    display:grid;
+    gap:8px;
+}
+
+.winner-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    font-size:11px;
+}
+
+
+.script-summary{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:10px;
+    margin:15px 0;
+}
+
+.script-stat{
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+}
+
+.script-stat span{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-bottom:5px;
+}
+
+.script-stat strong{
+    font-size:16px;
+}
+
+.script-list{
+    display:grid;
+    gap:12px;
+    margin-top:16px;
+}
+
+.script-question{
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(16,20,37,.9);
+}
+
+.script-question.correct{
+    border-color:rgba(45,212,160,.25);
+}
+
+.script-question.wrong{
+    border-color:rgba(255,93,115,.25);
+}
+
+.script-qtitle{
+    font-weight:800;
+    font-size:12px;
+    line-height:1.55;
+}
+
+.script-options{
+    display:grid;
+    gap:7px;
+    margin-top:12px;
+}
+
+.script-option{
+    padding:9px 11px;
+    border-radius:9px;
+    background:rgba(255,255,255,.025);
+    font-size:10px;
+    color:#cfd4e2;
+}
+
+.script-option.selected{
+    border:1px solid rgba(118,92,255,.45);
+}
+
+.script-option.correct-option{
+    border:1px solid rgba(45,212,160,.35);
+    color:#8ce8cb;
+}
+
+.script-answer{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:13px;
+}
+
+.answer-badge{
+    padding:6px 9px;
+    border-radius:8px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.answer-badge.good{
+    color:#77e4c2;
+    background:rgba(45,212,160,.09);
+}
+
+.answer-badge.bad{
+    color:#ff9aa9;
+    background:rgba(255,93,115,.09);
+}
+
+.view-script-btn{
+    margin-top:10px;
+    height:38px;
+    padding:0 13px;
+    border:1px solid rgba(118,92,255,.3);
+    border-radius:9px;
+    color:#c8bfff;
+    background:rgba(118,92,255,.08);
+    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.script-panel{
+    margin-top:16px;
+}
+
+.winner-position{font-size:18px;font-weight:900;color:#c8bfff;min-width:55px;text-align:right}.winner-main{display:flex;align-items:center;gap:12px}.winner-stats{display:flex;align-items:center;gap:14px}.winner-score{font-weight:900;color:#77e4c2}.winner-time{font-size:10px;color:#aeb6ca;white-space:nowrap}.winner-row strong{
+    color:#fff;
+}
+
+.mini-table{
+    width:100%;
+    margin-top:10px;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.mini-table th,
+.mini-table td{
+    padding:10px;
+    font-size:10px;
+}
+
+/* Highlight the logged-in student's own leaderboard row */
+.mini-table tbody tr.my-rank td{
+    background:rgba(118,92,255,0.18) !important;
+    border-top:1px solid rgba(118,92,255,0.45);
+    border-bottom:1px solid rgba(118,92,255,0.45);
+    font-weight:800;
+}
+
+.mini-table tbody tr.my-rank td:first-child{
+    box-shadow:inset 4px 0 0 var(--primary);
+}
+
+.mini-table tbody tr.my-rank td:last-child{
+    box-shadow:inset -4px 0 0 var(--primary);
+}
+
+
+.rank{
+    font-weight:900;
+    color:#c8bfff;
+}
+
+.time{
+    color:#aeb6ca;
+}
+
+.refresh-note{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+@media(max-width:700px) {
+
+    .header {
+
+        padding:
+            18px 14px;
+
+    }
+
+    .container {
+
+        padding:
+            10px 14px 40px;
+
+    }
+
+    .profile {
+
+        flex-direction: column;
+
+        align-items:
+            flex-start;
+
+    }
+
+    .stats {
+
+        width: 100%;
+
+    }
+
+    .stat {
+
+        flex: 1;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            Q
+        </div>
+
+        <div>
+
+            <h1>
+                Quiz Arena
+            </h1>
+
+            <p>
+                Student Portal
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="logout"
+        id="logout">
+
+        Logout
+
+    </button>
+
+</header>
+
+
+<main class="container">
+
+
+<section class="profile">
+
+    <div>
+
+        <h2 id="welcome">
+            Welcome
+        </h2>
+
+        <p id="studentInfo">
+            Loading...
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <strong id="quizCount">
+                0
+            </strong>
+
+            <span>
+                AVAILABLE
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong id="scoreCount">
+                0
+            </strong>
+
+            <span>
+                ATTEMPTED
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        data-tab="quizzes">
+
+        Available Quizzes
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="results">
+
+        Results
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="leaderboard">
+
+        Leaderboard
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="winners">
+
+        Winners
+
+    </button>
+
+</div>
+
+
+<section
+    class="section active"
+    id="quizzes">
+
+    <h3 class="section-title">
+
+        Quizzes for your year
+
+    </h3>
+
+
+    <div
+        class="grid"
+        id="quizGrid">
+
+    </div>
+
+</section>
+
+
+<section
+    class="section"
+    id="results">
+
+    <h3 class="section-title">
+
+        My Results
+
+    </h3>
+
+
+    <div id="scoresBox">
+
+    </div>
+
+</section>
+
+<section
+    class="section"
+    id="leaderboard"
+>
+
+    <h3 class="section-title">
+        Quiz Leaderboard
+    </h3>
+
+    <div id="leaderboardBox">
+    </div>
+
+</section>
+
+
+<section
+    class="section"
+    id="winners"
+>
+
+    <h3 class="section-title">
+        Winners
+    </h3>
+
+    <div id="winnersBox">
+    </div>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+let student = null;
+
+
+async function api(
+    url,
+    options = {}
+) {
+
+    const response =
+        await fetch(
+            url,
+            options
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error ||
+            "Request failed."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+async function load() {
+
+    try {
+
+        const me =
+            await api(
+                "/api/student/me"
+            );
+
+
+        student =
+            me.student;
+
+
+        document
+        .getElementById("welcome")
+        .textContent =
+            `Welcome, ${student.name}`;
+
+
+        document
+        .getElementById("studentInfo")
+        .textContent =
+            `${student.roll_no} • Section ${student.section} • Year ${student.year}`;
+
+
+        const quizData =
+            await api(
+                "/api/student/quizzes"
+            );
+
+
+        renderQuizzes(
+            quizData.quizzes
+        );
+
+
+        const attempted =
+            quizData.quizzes
+            .filter(q => q.attempted)
+            .length;
+
+
+        document
+        .getElementById("scoreCount")
+        .textContent =
+            attempted;
+
+
+        const scores =
+            await api(
+                "/api/student/scores"
+            );
+
+
+        renderScores(
+            scores.scores
+        );
+
+        await loadDashboardDeclarations(
+            quizData.quizzes
+        );
+
+
+    } catch (error) {
+
+        alert(error.message);
+
+        location.href =
+            "/student/login";
+
+    }
+
+}
+
+
+function renderQuizzes(list) {
+
+    document
+    .getElementById("quizCount")
+    .textContent =
+        list.length;
+
+
+    const box =
+        document.getElementById(
+            "quizGrid"
+        );
+
+
+    if (!list.length) {
+
+        box.innerHTML =
+            `
+            <div class="empty">
+                No active quizzes are
+                available for your year.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        list.map(q => {
+
+            const done =
+                q.attempted;
+
+
+            return `
+
+            <article
+                class="quiz-card">
+
+                <h3>
+                    ${escapeHTML(q.title)}
+                </h3>
+
+
+                <p>
+                    ${escapeHTML(
+                        q.description ||
+                        "Get ready and test your knowledge."
+                    )}
+                </p>
+
+
+                <div class="meta">
+
+                    <span class="pill">
+
+                        Year
+                        ${escapeHTML(q.year)}
+
+                    </span>
+
+
+                    ${
+                        done
+
+                        ?
+
+                        `<span
+                            class="pill done">
+
+                            ✓ Attempted
+
+                        </span>`
+
+                        :
+
+                        `<span
+                            class="pill">
+
+                            Available
+
+                        </span>`
+                    }
+
+                </div>
+
+
+                <button
+
+                    class="
+                        start
+                        ${done ? "done" : ""}
+                    "
+
+                    ${
+                        done
+                        ? "disabled"
+                        : ""
+                    }
+
+                    onclick="
+                        startQuiz('${q.id}')
+                    "
+                >
+
+                    ${
+                        done
+                        ?
+                        "ALREADY ATTEMPTED"
+                        :
+                        "START QUIZ →"
+                    }
+
+                </button>
+
+            </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function renderScores(list) {
+
+    const box =
+        document.getElementById("scoresBox");
+
+    if (!box) return;
+
+    renderResultsForQuiz(list);
+}
+
+function formatTime(seconds) {
+
+    const total = Number(seconds || 0);
+
+    const minutes = Math.floor(total / 60);
+    const secs = total % 60;
+
+    return `${minutes}m ${String(secs).padStart(2, "0")}s`;
+}
+
+
+function renderLeaderboard(data, quizzes) {
+
+    const box =
+        document.getElementById("leaderboardBox");
+
+    if (!box) return;
+
+    if (!quizzes.length) {
+        box.innerHTML = `
+            <div class="empty">
+                No quizzes available.
+            </div>
+        `;
+        return;
+    }
+
+    const declared = quizzes.find(
+        q => q.leaderboard_revealed
+    );
+
+    if (!declared) {
+        box.innerHTML = `
+            <div class="empty">
+                Leaderboard has not been declared yet.
+            </div>
+        `;
+        return;
+    }
+
+    const rows = data.leaderboard || [];
+
+    if (!rows.length) {
+        box.innerHTML = `
+            <div class="empty">
+                No submissions yet.
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = `
+        <h3 class="section-title">
+            ${escapeHTML(data.quiz.title)}
+        </h3>
+
+        <div style="overflow-x:auto;">
+
+            <table class="mini-table">
+
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Student</th>
+                        <th>Marks</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    ${
+                        rows.map(
+                            row => {
+
+                                /*
+                                 * Use roll_no instead of student_id here.
+                                 * The leaderboard response already contains
+                                 * roll_no, and the logged-in student's roll_no
+                                 * is loaded by /api/student/me.
+                                 */
+                                const myRollNo =
+                                    student &&
+                                    student.roll_no != null
+                                    ? String(student.roll_no).trim().toLowerCase()
+                                    : "";
+
+                                const rowRollNo =
+                                    row.roll_no != null
+                                    ? String(row.roll_no).trim().toLowerCase()
+                                    : "";
+
+                                const isMyRank =
+                                    myRollNo !== "" &&
+                                    rowRollNo !== "" &&
+                                    myRollNo === rowRollNo;
+
+                                return `
+                                    <tr class="${isMyRank ? "my-rank" : ""}">
+
+                                        <td class="rank">
+                                            #${row.rank}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHTML(row.name)}
+                                            <br>
+                                            <span class="time">
+                                                ${escapeHTML(row.roll_no)}
+                                            </span>
+                                        </td>
+
+                                        <td class="score">
+                                            ${row.score}/${row.total_questions}
+                                        </td>
+
+                                        <td class="time">
+                                            ${formatTime(row.total_time_taken)}
+                                        </td>
+
+                                    </tr>
+                                `;
+                            }
+                        ).join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    `;
+}
+
+
+function renderWinners(data, quizzes) {
+
+    const box =
+        document.getElementById("winnersBox");
+
+    if (!box) return;
+
+    if (!quizzes.length) {
+        box.innerHTML = `
+            <div class="empty">
+                No quizzes available.
+            </div>
+        `;
+        return;
+    }
+
+    if (!data.revealed) {
+        box.innerHTML = `
+            <div class="empty">
+                Winners have not been declared yet.
+            </div>
+        `;
+        return;
+    }
+
+    const winners = data.winners || [];
+
+    if (!winners.length) {
+        box.innerHTML = `
+            <div class="empty">
+                No winners have been selected.
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = `
+        <h3 class="section-title">
+            🏆 ${escapeHTML(data.quiz.title)}
+        </h3>
+
+        <div class="winner-list">
+
+            ${
+                winners.map(
+                    winner => `
+                        <div class="winner-row">
+
+                            <div class="winner-main">
+
+                                <div class="winner-position">
+                                    #${winner.position}
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        ${escapeHTML(winner.name)}
+                                    </strong>
+
+                                    <br>
+
+                                    <span class="time">
+                                        ${escapeHTML(winner.roll_no)}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="winner-stats">
+
+                                <span class="winner-score">
+                                    ${winner.score}/${winner.total_questions}
+                                </span>
+
+                                <span class="winner-time">
+                                    ${formatTime(winner.total_time_taken)}
+                                </span>
+
+                            </div>
+
+                        </div>
+                    `
+                ).join("")
+            }
+
+        </div>
+    `;
+}
+
+
+function renderResultsForQuiz(scores) {
+
+    const box =
+        document.getElementById("scoresBox");
+
+    if (!box) return;
+
+    if (!scores.length) {
+        box.innerHTML = `
+            <div class="empty">
+                You have not attempted any quizzes yet.
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = `
+        <div class="script-list">
+
+            ${
+                scores.map(
+                    s => `
+                        <article class="notice-card">
+
+                            <h4>
+                                ${escapeHTML(s.title)}
+                            </h4>
+
+                            ${
+                                s.results_revealed
+                                ?
+                                `
+                                    <div class="script-summary">
+
+                                        <div class="script-stat">
+                                            <span>SCORE</span>
+                                            <strong>
+                                                ${s.score}/${s.total_questions}
+                                            </strong>
+                                        </div>
+
+                                        <div class="script-stat">
+                                            <span>ANSWERED</span>
+                                            <strong>
+                                                ${s.answered_questions}/${s.total_questions}
+                                            </strong>
+                                        </div>
+
+                                        <div class="script-stat">
+                                            <span>TIME</span>
+                                            <strong>
+                                                ${formatTime(s.total_time_taken)}
+                                            </strong>
+                                        </div>
+
+                                    </div>
+
+                                    <a
+                                        class="view-script-btn"
+                                        href="/student/script?quiz_id=${encodeURIComponent(s.quiz_id)}"
+                                        style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;"
+                                    >
+                                        VIEW MY SCRIPT
+                                    </a>
+
+                                    <div
+                                        class="script-panel"
+                                        id="script-${s.quiz_id}"
+                                    ></div>
+                                `
+                                :
+                                `
+                                    <span class="notice-badge">
+                                        NOT DECLARED
+                                    </span>
+
+                                    <p>
+                                        Your result and script are waiting
+                                        for the admin to declare results.
+                                    </p>
+                                `
+                            }
+
+                        </article>
+                    `
+                ).join("")
+            }
+
+        </div>
+    `;
+}
+
+
+async function loadStudentScript(quizId) {
+
+    openedScriptQuizId = quizId;
+
+    const panel =
+        document.getElementById("script-" + quizId);
+
+    if (!panel) return;
+
+    panel.innerHTML = `
+        <div class="empty">
+            Loading your script...
+        </div>
+    `;
+
+    try {
+
+        const data =
+            await api(
+                "/api/student/script/" + quizId
+            );
+
+        if (!data.revealed) {
+
+            openedScriptQuizId = null;
+
+            panel.innerHTML = `
+                <div class="empty">
+                    Your script has not been declared yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        const summary = data.summary || {};
+        const script = data.script || [];
+
+        panel.innerHTML = `
+            <div class="script-summary">
+
+                <div class="script-stat">
+                    <span>SCORE</span>
+                    <strong>
+                        ${summary.score}/${summary.total_questions}
+                    </strong>
+                </div>
+
+                <div class="script-stat">
+                    <span>TIME TAKEN</span>
+                    <strong>
+                        ${formatTime(summary.total_time_taken)}
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="script-list">
+
+                ${
+                    script.map(
+                        q => {
+
+                            const statusClass =
+                                q.is_correct
+                                ? "correct"
+                                : "wrong";
+
+                            const statusText =
+                                q.submitted_answer == null
+                                ? "NOT ANSWERED"
+                                : (
+                                    q.is_correct
+                                    ? "CORRECT"
+                                    : "WRONG"
+                                );
+
+                            const options =
+                                q.options || {};
+
+                            return `
+                                <article
+                                    class="script-question ${statusClass}"
+                                >
+
+                                    <div class="script-qtitle">
+                                        Q${q.number}.
+                                        ${escapeHTML(
+                                            q.question_text || ""
+                                        )}
+                                    </div>
+
+                                    <div class="script-options">
+
+                                        ${
+                                            ["A","B","C","D"].map(
+                                                letter => {
+
+                                                    const value =
+                                                        options[letter] || "";
+
+                                                    const isSelected =
+                                                        q.submitted_answer != null &&
+                                                        String(q.submitted_answer)
+                                                            .trim()
+                                                            .toUpperCase()
+                                                        === letter;
+
+                                                    const isCorrect =
+                                                        q.correct_answer != null &&
+                                                        String(q.correct_answer)
+                                                            .trim()
+                                                            .toUpperCase()
+                                                        === letter;
+
+                                                    return `
+                                                        <div class="
+                                                            script-option
+                                                            ${isSelected ? "selected" : ""}
+                                                            ${isCorrect ? "correct-option" : ""}
+                                                        ">
+                                                            <b>${letter}.</b>
+                                                            ${escapeHTML(value)}
+
+                                                            ${
+                                                                isSelected
+                                                                ? " — Your answer"
+                                                                : ""
+                                                            }
+
+                                                            ${
+                                                                isCorrect
+                                                                ? " — Correct answer"
+                                                                : ""
+                                                            }
+                                                        </div>
+                                                    `;
+                                                }
+                                            ).join("")
+                                        }
+
+                                    </div>
+
+                                    <div class="script-answer">
+
+                                        <span class="
+                                            answer-badge
+                                            ${q.is_correct ? "good" : "bad"}
+                                        ">
+                                            ${statusText}
+                                        </span>
+
+                                        ${
+                                            q.submitted_answer == null
+                                            ?
+                                            `
+                                                <span class="answer-badge bad">
+                                                    Your answer: Not answered
+                                                </span>
+                                            `
+                                            :
+                                            `
+                                                <span class="answer-badge">
+                                                    Your answer:
+                                                    ${escapeHTML(
+                                                        String(
+                                                            q.submitted_answer
+                                                        )
+                                                    )}
+                                                </span>
+                                            `
+                                        }
+
+                                        <span class="answer-badge good">
+                                            Correct:
+                                            ${escapeHTML(
+                                                String(
+                                                    q.correct_answer || ""
+                                                )
+                                            )}
+                                        </span>
+
+                                    </div>
+
+                                </article>
+                            `;
+                        }
+                    ).join("")
+                }
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Script load failed:",
+            error
+        );
+
+        panel.innerHTML = `
+            <div class="empty">
+                Unable to load your script right now.
+            </div>
+        `;
+    }
+}
+
+
+
+
+
+async function loadDashboardDeclarations(quizzes) {
+
+    const leaderboardBox =
+        document.getElementById("leaderboardBox");
+
+    const winnersBox =
+        document.getElementById("winnersBox");
+
+    // Load the first quiz whose leaderboard is declared.
+    let leaderboardData = {
+        revealed: false,
+        leaderboard: []
+    };
+
+    const leaderboardQuiz =
+        quizzes.find(q => q.leaderboard_revealed);
+
+    if (leaderboardQuiz) {
+
+        try {
+            leaderboardData =
+                await api(
+                    "/api/student/leaderboard/" +
+                    leaderboardQuiz.id
+                );
+        } catch (error) {
+            console.error(
+                "Leaderboard load failed:",
+                error
+            );
+        }
+    }
+
+    renderLeaderboard(
+        leaderboardData,
+        quizzes
+    );
+
+
+    // Load the first quiz whose winners are declared.
+    let winnersData = {
+        revealed: false,
+        winners: []
+    };
+
+    const winnersQuiz =
+        quizzes.find(q => q.winners_revealed);
+
+    if (winnersQuiz) {
+
+        try {
+            winnersData =
+                await api(
+                    "/api/student/winners/" +
+                    winnersQuiz.id
+                );
+        } catch (error) {
+            console.error(
+                "Winners load failed:",
+                error
+            );
+        }
+    }
+
+    renderWinners(
+        winnersData,
+        quizzes
+    );
+}
+
+
+
+
+function startQuiz(id) {
+
+    location.href =
+        "/student/quiz/" + id;
+
+}
+
+
+document
+.querySelectorAll(".tab")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            document
+            .querySelectorAll(".tab")
+            .forEach(
+                x =>
+                    x.classList
+                    .remove("active")
+            );
+
+
+            document
+            .querySelectorAll(".section")
+            .forEach(
+                x =>
+                    x.classList
+                    .remove("active")
+            );
+
+
+            button
+            .classList
+            .add("active");
+
+
+            document
+            .getElementById(
+                button.dataset.tab
+            )
+            .classList
+            .add("active");
+
+        }
+    );
+
+});
+
+
+document
+.getElementById("logout")
+.addEventListener(
+    "click",
+    async () => {
+
+        await fetch(
+            "/api/student/logout",
+            {
+                method: "POST"
+            }
+        );
+
+
+        location.href =
+            "/student/login";
+
+    }
+);
+
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+load();
+
+/*
+ * Admin declarations are read from Supabase through the Flask API.
+ * Refreshing these APIs periodically makes DECLARE/UNDECLARE actions
+ * appear on the student dashboard without requiring a manual refresh.
+ */
+let openedScriptQuizId = null;
+
+
+setInterval(
+    refreshDeclarationAreas,
+    10000
+);
+
+</script>
+
+</body>
+</html>

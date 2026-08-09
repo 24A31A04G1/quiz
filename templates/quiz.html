@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Quiz Arena | Quiz</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        :root {
+
+            --bg: #070914;
+            --panel: #101425;
+            --border: rgba(255,255,255,0.08);
+
+            --text: #f7f8ff;
+            --muted: #8d96ad;
+
+            --primary: #765cff;
+            --primary2: #9b82ff;
+
+            --green: #2dd4a0;
+            --red: #ff5d73;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            color:
+                var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(118,92,255,0.20),
+                    transparent 28%
+                ),
+
+                var(--bg);
+
+        }
+
+
+        /* =====================================================
+           MAIN PAGE
+        ===================================================== */
+
+        .page {
+
+            max-width:
+                1150px;
+
+            margin:
+                auto;
+
+            padding:
+                18px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            padding:
+                18px 20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                17px;
+
+            background:
+                rgba(16,20,37,0.90);
+
+            backdrop-filter:
+                blur(20px);
+
+        }
+
+
+        .title {
+
+            font-size:
+                19px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .details {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .timer {
+
+            min-width:
+                105px;
+
+            padding:
+                12px 15px;
+
+            border-radius:
+                10px;
+
+            text-align:
+                center;
+
+            color:
+                #bfb3ff;
+
+            background:
+                rgba(118,92,255,0.12);
+
+            font-size:
+                19px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .timer.danger {
+
+            color:
+                white;
+
+            background:
+                rgba(255,93,115,0.90);
+
+            animation:
+                pulse 0.8s infinite;
+
+        }
+
+
+        @keyframes pulse {
+
+            50% {
+
+                transform:
+                    scale(1.04);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .progress {
+
+            margin:
+                15px 0;
+
+            padding:
+                15px 18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                rgba(16,20,37,0.85);
+
+        }
+
+
+        .progress-info {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                8px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+            font-weight:
+                850;
+
+        }
+
+
+        .bar {
+
+            height:
+                7px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+        }
+
+
+        .fill {
+
+            height:
+                100%;
+
+            width:
+                0%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--primary2)
+                );
+
+            transition:
+                width 0.25s;
+
+        }
+
+
+        /* =====================================================
+           QUESTION CARD
+        ===================================================== */
+
+        .card {
+
+            padding:
+                34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                21px;
+
+            background:
+                rgba(16,20,37,0.92);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.25);
+
+        }
+
+
+        .top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                24px;
+
+        }
+
+
+        .number {
+
+            padding:
+                8px 12px;
+
+            border-radius:
+                9px;
+
+            color:
+                #bdb2ff;
+
+            background:
+                rgba(118,92,255,0.12);
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .question-timer {
+
+            color:
+                var(--muted);
+
+            font-size:
+                11px;
+
+            font-weight:
+                850;
+
+        }
+
+
+        .question-timer.danger {
+
+            color:
+                var(--red);
+
+        }
+
+
+        .question {
+
+            margin-bottom:
+                27px;
+
+            font-size:
+                23px;
+
+            line-height:
+                1.55;
+
+            font-weight:
+                800;
+
+        }
+
+
+        /* =====================================================
+           OPTIONS
+        ===================================================== */
+
+        .options {
+
+            display:
+                grid;
+
+            gap:
+                12px;
+
+        }
+
+
+        .option {
+
+            position:
+                relative;
+
+        }
+
+
+        .option input {
+
+            position:
+                absolute;
+
+            opacity:
+                0;
+
+        }
+
+
+        .option label {
+
+            display:
+                block;
+
+            padding:
+                17px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            color:
+                #ccd1df;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .option label:hover {
+
+            border-color:
+                rgba(118,92,255,0.45);
+
+            background:
+                rgba(118,92,255,0.05);
+
+        }
+
+
+        .option input:checked + label {
+
+            border-color:
+                var(--primary);
+
+            color:
+                white;
+
+            background:
+                rgba(118,92,255,0.12);
+
+            box-shadow:
+                0 0 0 2px
+                rgba(118,92,255,0.08);
+
+        }
+
+
+        .letter {
+
+            display:
+                inline-flex;
+
+            width:
+                29px;
+
+            height:
+                29px;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            margin-right:
+                10px;
+
+            border-radius:
+                8px;
+
+            color:
+                #bdb2ff;
+
+            background:
+                rgba(118,92,255,0.11);
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav {
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            margin-top:
+                26px;
+
+            padding-top:
+                21px;
+
+            border-top:
+                1px solid var(--border);
+
+        }
+
+
+        button {
+
+            min-width:
+                120px;
+
+            height:
+                45px;
+
+            padding:
+                0 20px;
+
+            border:
+                0;
+
+            border-radius:
+                10px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #8d70ff
+                );
+
+            cursor:
+                pointer;
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        button:disabled {
+
+            opacity:
+                0.5;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        .submit {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #059669,
+                    #10b981
+                );
+
+        }
+
+
+        /* =====================================================
+           START SCREEN
+        ===================================================== */
+
+        .quiz-start-screen {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                200000;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                24px;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(118,92,255,0.25),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(45,212,160,0.12),
+                    transparent 30%
+                ),
+
+                #070914;
+
+        }
+
+
+        .quiz-start-screen.hidden {
+
+            display:
+                none;
+
+        }
+
+
+        .quiz-start-card {
+
+            width:
+                100%;
+
+            max-width:
+                560px;
+
+            padding:
+                44px;
+
+            text-align:
+                center;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(16,20,37,0.96);
+
+            backdrop-filter:
+                blur(25px);
+
+            box-shadow:
+                0 40px 120px
+                rgba(0,0,0,0.55);
+
+        }
+
+
+        .quiz-start-icon {
+
+            width:
+                80px;
+
+            height:
+                80px;
+
+            margin:
+                0 auto 18px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                23px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary2)
+                );
+
+            font-size:
+                32px;
+
+            font-weight:
+                900;
+
+            box-shadow:
+                0 18px 45px
+                rgba(118,92,255,0.30);
+
+        }
+
+
+        .quiz-start-badge {
+
+            display:
+                inline-block;
+
+            padding:
+                7px 13px;
+
+            margin-bottom:
+                14px;
+
+            border:
+                1px solid
+                rgba(118,92,255,0.20);
+
+            border-radius:
+                999px;
+
+            color:
+                #bdb2ff;
+
+            background:
+                rgba(118,92,255,0.09);
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .quiz-start-card h1 {
+
+            font-size:
+                32px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .quiz-start-card > p {
+
+            max-width:
+                430px;
+
+            margin:
+                12px auto 24px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .quiz-rules {
+
+            display:
+                grid;
+
+            gap:
+                9px;
+
+            margin-bottom:
+                24px;
+
+            text-align:
+                left;
+
+        }
+
+
+        .quiz-rules div {
+
+            padding:
+                12px 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius:
+                11px;
+
+            color:
+                #cdd2e0;
+
+            background:
+                rgba(255,255,255,0.03);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .quiz-rules span {
+
+            display:
+                inline-block;
+
+            width:
+                28px;
+
+            color:
+                #a996ff;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .quiz-start-btn {
+
+            width:
+                100%;
+
+            height:
+                53px;
+
+        }
+
+
+        .fullscreen-error {
+
+            display:
+                none;
+
+            margin-top:
+                14px;
+
+            padding:
+                11px;
+
+            border:
+                1px solid
+                rgba(255,93,115,0.20);
+
+            border-radius:
+                10px;
+
+            color:
+                #ff9aa9;
+
+            background:
+                rgba(255,93,115,0.08);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .fullscreen-error.show {
+
+            display:
+                block;
+
+        }
+
+
+        /* =====================================================
+           FULLSCREEN WARNING
+        ===================================================== */
+
+        #fullscreenWarning {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                999999;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                25px;
+
+            background:
+                rgba(7,9,20,0.97);
+
+            backdrop-filter:
+                blur(15px);
+
+        }
+
+
+        .fullscreen-warning-card {
+
+            width:
+                100%;
+
+            max-width:
+                450px;
+
+            padding:
+                38px;
+
+            text-align:
+                center;
+
+            border:
+                1px solid
+                rgba(255,93,115,0.25);
+
+            border-radius:
+                25px;
+
+            background:
+                #101425;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,0.6);
+
+        }
+
+
+        .warning-icon {
+
+            width:
+                70px;
+
+            height:
+                70px;
+
+            margin:
+                0 auto 20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            color:
+                white;
+
+            background:
+                rgba(255,93,115,0.15);
+
+            border:
+                1px solid
+                rgba(255,93,115,0.30);
+
+            font-size:
+                30px;
+
+        }
+
+
+        .fullscreen-warning-card h2 {
+
+            margin-bottom:
+                12px;
+
+            font-size:
+                27px;
+
+        }
+
+
+        .fullscreen-warning-card p {
+
+            color:
+                #ff9aa9;
+
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .warning-small {
+
+            margin-top:
+                8px;
+
+            color:
+                #8d96ad !important;
+
+            font-size:
+                12px !important;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .warning-loader {
+
+            margin-top:
+                25px;
+
+            padding:
+                12px;
+
+            border-radius:
+                10px;
+
+            color:
+                #bdb2ff;
+
+            background:
+                rgba(118,92,255,0.08);
+
+            font-size:
+                11px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        /* =====================================================
+           COMPLETION SCREEN
+        ===================================================== */
+
+        .completion-screen {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                300000;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                24px;
+
+            text-align:
+                center;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(118,92,255,0.24),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(45,212,160,0.14),
+                    transparent 30%
+                ),
+
+                #070914;
+
+        }
+
+
+        .completion-screen.active {
+
+            display:
+                flex;
+
+        }
+
+
+        .completion-card {
+
+            width:
+                100%;
+
+            max-width:
+                540px;
+
+            padding:
+                48px 42px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(16,20,37,0.95);
+
+            backdrop-filter:
+                blur(25px);
+
+            box-shadow:
+                0 40px 120px
+                rgba(0,0,0,0.55);
+
+        }
+
+
+        .success-icon {
+
+            width:
+                88px;
+
+            height:
+                88px;
+
+            margin:
+                0 auto 22px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #20c997,
+                    #2dd4a0
+                );
+
+            font-size:
+                43px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .completion-badge {
+
+            display:
+                inline-block;
+
+            padding:
+                7px 13px;
+
+            margin-bottom:
+                15px;
+
+            border-radius:
+                999px;
+
+            color:
+                #7ee7c5;
+
+            background:
+                rgba(45,212,160,0.09);
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .completion-card h1 {
+
+            font-size:
+                34px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .completion-message {
+
+            margin-top:
+                12px;
+
+            color:
+                #e8eaff;
+
+            font-size:
+                17px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .completion-sub {
+
+            max-width:
+                390px;
+
+            margin:
+                10px auto 0;
+
+            color:
+                #8d96ad;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .completion-line {
+
+            width:
+                100%;
+
+            height:
+                1px;
+
+            margin:
+                28px 0;
+
+            background:
+                rgba(255,255,255,0.08);
+
+        }
+
+
+        .completion-info {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                24px;
+
+        }
+
+
+        .completion-info div {
+
+            padding:
+                14px;
+
+            border-radius:
+                13px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+        }
+
+
+        .completion-info span {
+
+            display:
+                block;
+
+            margin-bottom:
+                5px;
+
+            color:
+                #737c93;
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .completion-info strong {
+
+            font-size:
+                13px;
+
+        }
+
+
+        .dashboard-btn {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            width:
+                100%;
+
+            height:
+                51px;
+
+            border-radius:
+                12px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #967cff
+                );
+
+            text-decoration:
+                none;
+
+            font-size:
+                12px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:700px) {
+
+            .page {
+                padding:
+                    10px;
+            }
+
+
+            .header {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+
+            }
+
+
+            .timer {
+                width:
+                    100%;
+            }
+
+
+            .card {
+                padding:
+                    22px 17px;
+            }
+
+
+            .question {
+                font-size:
+                    19px;
+            }
+
+
+            .nav {
+                flex-direction:
+                    column;
+            }
+
+
+            button {
+                width:
+                    100%;
+            }
+
+
+            .quiz-start-card {
+                padding:
+                    35px 22px;
+            }
+
+
+            .quiz-start-card h1 {
+                font-size:
+                    27px;
+            }
+
+
+            .completion-card {
+                padding:
+                    38px 24px;
+            }
+
+
+            .completion-card h1 {
+                font-size:
+                    28px;
+            }
+
+
+            .completion-info {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     START SCREEN
+===================================================== -->
+
+<div
+    class="quiz-start-screen"
+    id="quizStartScreen">
+
+
+    <div class="quiz-start-card">
+
+
+        <div class="quiz-start-icon">
+            Q
+        </div>
+
+
+        <div class="quiz-start-badge">
+            QUIZ READY
+        </div>
+
+
+        <h1>
+            Ready to Begin?
+        </h1>
+
+
+        <p>
+            Click the button below to enter fullscreen
+            and start the quiz.
+        </p>
+
+
+        <div class="quiz-rules">
+
+
+            <div>
+                <span>⏱</span>
+                Each question has its own timer
+            </div>
+
+
+            <div>
+                <span>🔀</span>
+                Questions are randomly shuffled
+            </div>
+
+
+            <div>
+                <span>⛶</span>
+                Exiting fullscreen automatically submits
+            </div>
+
+
+            <div>
+                <span>→</span>
+                Timer expiry moves to the next question
+            </div>
+
+
+            <div>
+                <span>✓</span>
+                Last question timer expiry submits the quiz
+            </div>
+
+
+        </div>
+
+
+        <button
+            type="button"
+            id="startQuizBtn"
+            class="quiz-start-btn">
+
+            ENTER FULLSCREEN & START QUIZ →
+
+        </button>
+
+
+        <div
+            class="fullscreen-error"
+            id="fullscreenError">
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     QUIZ
+===================================================== -->
+
+<div class="page">
+
+
+    <header class="header">
+
+
+        <div>
+
+
+            <div
+                class="title"
+                id="quizTitle">
+
+                Loading...
+
+            </div>
+
+
+            <div
+                class="details"
+                id="studentDetails">
+
+                Loading student...
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="timer"
+            id="timer">
+
+            00:00
+
+        </div>
+
+
+    </header>
+
+
+    <div class="progress">
+
+
+        <div class="progress-info">
+
+
+            <span id="progressText">
+                Question
+            </span>
+
+
+            <span id="answeredText">
+                0 answered
+            </span>
+
+
+        </div>
+
+
+        <div class="bar">
+
+
+            <div
+                class="fill"
+                id="progressFill">
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <section class="card">
+
+
+        <div class="top">
+
+
+            <span
+                class="number"
+                id="questionNumber">
+
+                QUESTION
+
+            </span>
+
+
+            <span
+                class="question-timer"
+                id="questionTimer">
+
+                ⏱ 00:00
+
+            </span>
+
+
+        </div>
+
+
+        <div
+            class="question"
+            id="questionText">
+        </div>
+
+
+        <div
+            class="options"
+            id="options">
+        </div>
+
+
+        <div class="nav">
+
+
+            <!--
+                NO PREVIOUS BUTTON.
+                Student can only move forward.
+            -->
+
+            <button
+                class="next"
+                id="next">
+
+                Next →
+
+            </button>
+
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+<!-- =====================================================
+     COMPLETION
+===================================================== -->
+
+<div
+    class="completion-screen"
+    id="completionScreen">
+
+
+    <div class="completion-card">
+
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <div class="completion-badge">
+            SUBMISSION SUCCESSFUL
+        </div>
+
+
+        <h1>
+            Quiz Completed!
+        </h1>
+
+
+        <p
+            class="completion-message"
+            id="completionMessage">
+
+            Thank you for participating.
+
+        </p>
+
+
+        <p
+            class="completion-sub"
+            id="completionSub">
+
+            Your answers have been submitted successfully.
+            Your response has been securely saved.
+
+        </p>
+
+
+        <div class="completion-line">
+        </div>
+
+
+        <div class="completion-info">
+
+
+            <div>
+
+                <span>
+                    Status
+                </span>
+
+                <strong>
+                    Completed
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Submission
+                </span>
+
+                <strong>
+                    Saved
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/student/dashboard"
+            class="dashboard-btn">
+
+            BACK TO DASHBOARD
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   QUIZ ID
+===================================================== */
+
+const quizId =
+    "{{ quiz_id }}";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let quiz = null;
+
+let questions = [];
+
+let current = 0;
+
+let answers = {};
+
+let timer = null;
+
+let remaining = 0;
+
+let started = false;
+
+let submitting = false;
+
+let quizReady = false;
+
+let forcedByFullscreenExit = false;
+
+// Total quiz duration tracking.
+// This is the only time value saved to the database.
+let quizStartTime = null;
+let totalTimeTaken = 0;
+
+
+/* =====================================================
+   SHORTCUT
+===================================================== */
+
+const $ = id =>
+    document.getElementById(id);
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function api(
+    url,
+    options = {}
+) {
+
+
+    const response =
+        await fetch(
+            url,
+            options
+        );
+
+
+    let data;
+
+
+    try {
+
+        data =
+            await response.json();
+
+    }
+    catch {
+
+        throw new Error(
+            "Invalid server response."
+        );
+
+    }
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error ||
+            data.message ||
+            "Request failed."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =====================================================
+   SHUFFLE QUESTIONS ONLY
+===================================================== */
+
+function shuffleQuestions(array) {
+
+
+    /*
+        Fisher-Yates shuffle.
+
+        Only the question array is shuffled.
+
+        Each question object keeps its own:
+            id
+            question_text
+            option_a
+            option_b
+            option_c
+            option_d
+            correct_answer
+            question_order
+            time_limit
+
+        Therefore scoring remains correct.
+
+        Options remain A, B, C, D.
+    */
+
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+
+    return array;
+
+}
+
+
+/* =====================================================
+   LOAD QUIZ
+===================================================== */
+
+async function init() {
+
+
+    try {
+
+
+        /*
+            Get logged-in student.
+        */
+
+        const studentData =
+            await api(
+                "/api/student/me"
+            );
+
+
+        const student =
+            studentData.student;
+
+
+        $("studentDetails")
+            .textContent =
+            `${student.roll_no} • ${student.name} • Section ${student.section} • Year ${student.year}`;
+
+
+        /*
+            Get quiz.
+        */
+
+        const data =
+            await api(
+                "/api/student/quiz/"
+                + quizId
+            );
+
+
+        quiz =
+            data.quiz;
+
+
+        questions =
+            data.questions || [];
+
+
+        /*
+            =================================================
+            IMPORTANT
+            =================================================
+
+            Shuffle QUESTIONS only.
+
+            Options are NOT shuffled.
+        */
+
+        shuffleQuestions(
+            questions
+        );
+
+
+        $("quizTitle")
+            .textContent =
+            quiz.title;
+
+
+        if (
+            !questions.length
+        ) {
+
+
+            alert(
+                "This quiz has no questions."
+            );
+
+
+            location.href =
+                "/student/dashboard";
+
+
+            return;
+
+        }
+
+
+        /*
+            Fullscreen is NOT requested here.
+
+            It must be requested from the
+            user's Start button click.
+        */
+
+        quizReady =
+            true;
+
+
+    }
+    catch (error) {
+
+
+        console.error(
+            "QUIZ INIT ERROR:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+
+
+        location.href =
+            "/student/dashboard";
+
+    }
+
+}
+
+
+/* =====================================================
+   START QUIZ
+===================================================== */
+
+$("startQuizBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+
+            if (
+                !quizReady
+            ) {
+
+                return;
+
+            }
+
+
+            const button =
+                $("startQuizBtn");
+
+
+            const errorBox =
+                $("fullscreenError");
+
+
+            errorBox
+                .classList
+                .remove(
+                    "show"
+                );
+
+
+            errorBox.textContent =
+                "";
+
+
+            button.disabled =
+                true;
+
+
+            button.textContent =
+                "ENTERING FULLSCREEN...";
+
+
+            try {
+
+
+                /*
+                    Fullscreen request is directly
+                    inside the button click.
+                */
+
+                if (
+                    !document.fullscreenElement
+                ) {
+
+
+                    await document
+                        .documentElement
+                        .requestFullscreen();
+
+                }
+
+
+                if (
+                    !document.fullscreenElement
+                ) {
+
+
+                    throw new Error(
+                        "Fullscreen could not be activated."
+                    );
+
+                }
+
+
+                $("quizStartScreen")
+                    .classList
+                    .add(
+                        "hidden"
+                    );
+
+
+                started =
+                    true;
+
+
+                submitting =
+                    false;
+
+
+                forcedByFullscreenExit =
+                    false;
+
+
+                /*
+                    Start TOTAL QUIZ timer.
+
+                    This is different from the per-question timer.
+                    We save only the total duration in the database.
+                */
+
+                quizStartTime = Date.now();
+                totalTimeTaken = 0;
+
+
+                /*
+                    Start first question.
+                */
+
+                showQuestion();
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    "FULLSCREEN ERROR:",
+                    error
+                );
+
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "ENTER FULLSCREEN & START QUIZ →";
+
+
+                errorBox.textContent =
+                    "Fullscreen permission is required. Please click the button again and allow fullscreen.";
+
+
+                errorBox
+                    .classList
+                    .add(
+                        "show"
+                    );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
+
+function showQuestion() {
+
+
+    const question =
+        questions[current];
+
+
+    if (!question) {
+
+        return;
+
+    }
+
+
+    /*
+        Question number.
+    */
+
+    $("questionNumber")
+        .textContent =
+        `QUESTION ${current + 1}`;
+
+
+    /*
+        Progress.
+    */
+
+    $("progressText")
+        .textContent =
+        `Question ${current + 1} of ${questions.length}`;
+
+
+    updateAnswered();
+
+
+    $("progressFill")
+        .style.width =
+        (
+            (
+                current + 1
+            )
+            /
+            questions.length
+            *
+            100
+        )
+        + "%";
+
+
+    /*
+        Question text.
+    */
+
+    $("questionText")
+        .textContent =
+        question.question_text;
+
+
+    /*
+        =================================================
+        OPTIONS ARE NOT SHUFFLED
+        =================================================
+
+        Always:
+
+        A → option_a
+        B → option_b
+        C → option_c
+        D → option_d
+    */
+
+    const options = [
+
+        [
+            "A",
+            question.option_a
+        ],
+
+        [
+            "B",
+            question.option_b
+        ],
+
+        [
+            "C",
+            question.option_c
+        ],
+
+        [
+            "D",
+            question.option_d
+        ]
+
+    ];
+
+
+    $("options").innerHTML =
+
+        options
+            .map(
+                (
+                    [
+                        letter,
+                        text
+                    ]
+                ) => `
+
+                    <div class="option">
+
+
+                        <input
+
+                            type="radio"
+
+                            name="answer"
+
+                            id="answer-${letter}"
+
+                            value="${letter}"
+
+                            ${
+                                answers[
+                                    question.id
+                                ] === letter
+                                    ? "checked"
+                                    : ""
+                            }
+
+                        >
+
+
+                        <label
+                            for="answer-${letter}"
+                        >
+
+
+                            <span
+                                class="letter"
+                            >
+
+                                ${letter}
+
+                            </span>
+
+
+                            ${escapeHTML(text)}
+
+
+                        </label>
+
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+
+    /*
+        Save selected answer.
+    */
+
+    document
+        .querySelectorAll(
+            'input[name="answer"]'
+        )
+        .forEach(
+            input => {
+
+
+                input.addEventListener(
+                    "change",
+                    () => {
+
+
+                        answers[
+                            question.id
+                        ] =
+                            input.value;
+
+
+                        updateAnswered();
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+        Last question:
+        Submit button.
+
+        Other questions:
+        Next button.
+    */
+
+    if (
+        current ===
+        questions.length - 1
+    ) {
+
+
+        $("next")
+            .textContent =
+            "SUBMIT QUIZ ✓";
+
+
+        $("next")
+            .className =
+            "submit";
+
+    }
+    else {
+
+
+        $("next")
+            .textContent =
+            "Next →";
+
+
+        $("next")
+            .className =
+            "next";
+
+    }
+
+
+    /*
+        Start NEW timer.
+    */
+
+    startTimer(
+        Number(
+            question.time_limit || 30
+        )
+    );
+
+}
+
+
+/* =====================================================
+   ANSWER COUNT
+===================================================== */
+
+function updateAnswered() {
+
+
+    $("answeredText")
+        .textContent =
+        `${Object.keys(answers).length} answered`;
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer(
+    seconds
+) {
+
+
+    clearInterval(
+        timer
+    );
+
+
+    remaining =
+        Math.max(
+            1,
+            Number(seconds) || 30
+        );
+
+
+    updateTimer();
+
+
+    timer =
+        setInterval(
+            () => {
+
+
+                remaining--;
+
+
+                updateTimer();
+
+
+                if (
+                    remaining <= 0
+                ) {
+
+
+                    clearInterval(
+                        timer
+                    );
+
+
+                    /*
+                        Intermediate question:
+                        timer ends → next question.
+
+                        Last question:
+                        timer ends → submit.
+                    */
+
+                    if (
+                        current <
+                        questions.length - 1
+                    ) {
+
+
+                        current++;
+
+
+                        showQuestion();
+
+                    }
+                    else {
+
+
+                        submitQuiz();
+
+                    }
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =====================================================
+   UPDATE TIMER
+===================================================== */
+
+function updateTimer() {
+
+
+    const minutes =
+        Math.floor(
+            remaining / 60
+        );
+
+
+    const seconds =
+        remaining % 60;
+
+
+    const text =
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+
+    $("timer")
+        .textContent =
+        text;
+
+
+    $("questionTimer")
+        .textContent =
+        `⏱ ${text}`;
+
+
+    $("timer")
+        .classList
+        .toggle(
+            "danger",
+            remaining <= 5
+        );
+
+
+    $("questionTimer")
+        .classList
+        .toggle(
+            "danger",
+            remaining <= 5
+        );
+
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+function moveNext() {
+
+
+    /*
+        Answer is NOT mandatory.
+
+        Student can click Next
+        without selecting anything.
+    */
+
+    if (
+        current <
+        questions.length - 1
+    ) {
+
+
+        current++;
+
+
+        showQuestion();
+
+    }
+    else {
+
+
+        submitQuiz();
+
+    }
+
+}
+
+
+/* =====================================================
+   NEXT / SUBMIT BUTTON
+===================================================== */
+
+$("next")
+    .addEventListener(
+        "click",
+        () => {
+
+
+            if (
+                submitting
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                current <
+                questions.length - 1
+            ) {
+
+
+                moveNext();
+
+            }
+            else {
+
+
+                submitQuiz();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SUBMIT QUIZ
+===================================================== */
+
+async function submitQuiz() {
+
+
+    if (
+        submitting
+    ) {
+
+        return;
+
+    }
+
+
+    submitting =
+        true;
+
+
+    clearInterval(
+        timer
+    );
+
+
+    $("next").disabled =
+        true;
+
+
+    $("next")
+        .textContent =
+        "SUBMITTING...";
+
+
+    /*
+        Calculate total quiz time in seconds.
+
+        From the moment the student clicks
+        "ENTER FULLSCREEN & START QUIZ"
+        until submit is triggered.
+
+        This includes time spent on all questions.
+    */
+
+    if (quizStartTime !== null) {
+
+        totalTimeTaken =
+            Math.max(
+                0,
+                Math.floor(
+                    (Date.now() - quizStartTime) / 1000
+                )
+            );
+
+    }
+
+
+    try {
+
+
+        /*
+            Send answers + TOTAL quiz time.
+        
+
+            Unanswered questions are not included.
+        */
+
+        await api(
+            "/api/student/submit",
+            {
+
+                method:
+                    "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        quiz_id:
+                            quiz.id,
+
+                        answers:
+                            answers,
+
+                        /*
+                            Total quiz duration in seconds.
+                        */
+                        total_time_taken:
+                            totalTimeTaken
+
+                    })
+
+            }
+        );
+
+
+        /*
+            IMPORTANT:
+
+            Set started=false BEFORE our own
+            exitFullscreen() call.
+
+            Therefore fullscreenchange will
+            NOT trigger a second submission.
+        */
+
+        started =
+            false;
+
+
+        /*
+            Exit fullscreen after submission.
+        */
+
+        if (
+            document.fullscreenElement
+        ) {
+
+
+            try {
+
+
+                await document
+                    .exitFullscreen();
+
+
+            }
+            catch (
+                error
+            ) {
+
+
+                console.log(
+                    "Fullscreen exit:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+            Different message if the student
+            exited fullscreen.
+        */
+
+        if (
+            forcedByFullscreenExit
+        ) {
+
+
+            $("completionMessage")
+                .textContent =
+                "Your quiz was automatically submitted.";
+
+
+            $("completionSub")
+                .textContent =
+                "You exited fullscreen mode, so the quiz was automatically submitted with the answers you had given so far.";
+
+        }
+
+
+        /*
+            Show completion screen.
+        */
+
+        $("completionScreen")
+            .classList
+            .add(
+                "active"
+            );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+    }
+    catch (
+        error
+    ) {
+
+
+        console.error(
+            "SUBMIT ERROR:",
+            error
+        );
+
+
+        submitting =
+            false;
+
+
+        $("next").disabled =
+            false;
+
+
+        $("next")
+            .textContent =
+
+            current ===
+            questions.length - 1
+
+                ? "SUBMIT QUIZ ✓"
+
+                : "Next →";
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FULLSCREEN EXIT
+===================================================== */
+
+document.addEventListener(
+    "fullscreenchange",
+    () => {
+
+
+        /*
+            If the student manually exits fullscreen,
+            submit immediately.
+        */
+
+        if (
+            started &&
+            !document.fullscreenElement &&
+            !submitting
+        ) {
+
+
+            forcedByFullscreenExit =
+                true;
+
+
+            /*
+                Show clear warning.
+            */
+
+            showFullscreenWarning();
+
+
+            /*
+                Automatically submit.
+            */
+
+            submitQuiz();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FULLSCREEN WARNING
+===================================================== */
+
+function showFullscreenWarning() {
+
+
+    /*
+        Don't create it twice.
+    */
+
+    if (
+        $("fullscreenWarning")
+    ) {
+
+        return;
+
+    }
+
+
+    const warning =
+        document.createElement(
+            "div"
+        );
+
+
+    warning.id =
+        "fullscreenWarning";
+
+
+    warning.innerHTML = `
+
+        <div class="fullscreen-warning-card">
+
+
+            <div class="warning-icon">
+
+                ⚠
+
+            </div>
+
+
+            <h2>
+
+                Quiz Submitted
+
+            </h2>
+
+
+            <p>
+
+                You exited fullscreen mode.
+
+            </p>
+
+
+            <p class="warning-small">
+
+                For security reasons, your quiz is being
+                automatically submitted with the answers
+                you have given so far.
+
+            </p>
+
+
+            <div class="warning-loader">
+
+                Submitting your answers...
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        warning
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+    value
+) {
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+init();
+
+
+</script>
+
+
+</body>
+
+</html>

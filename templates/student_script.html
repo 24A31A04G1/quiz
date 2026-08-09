@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Arena | My Script</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+    --bg:#070914;
+    --panel:#101425;
+    --border:rgba(255,255,255,.09);
+    --text:#f7f8ff;
+    --muted:#8d96ad;
+    --primary:#765cff;
+    --primary2:#9b82ff;
+    --green:#2dd4a0;
+    --red:#ff5d73;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(118,92,255,.22),transparent 30%),
+        radial-gradient(circle at 90% 90%,rgba(45,212,160,.08),transparent 25%),
+        var(--bg);
+    padding:28px;
+}
+
+.container{
+    width:100%;
+    max-width:1000px;
+    margin:0 auto;
+}
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.back{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:42px;
+    padding:0 15px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:#d8d4ff;
+    background:rgba(255,255,255,.04);
+    text-decoration:none;
+    font-size:11px;
+    font-weight:800;
+}
+
+.title{
+    font-size:28px;
+    font-weight:900;
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(16,20,37,.9);
+}
+
+.stat span{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.stat strong{
+    font-size:22px;
+}
+
+.script{
+    display:grid;
+    gap:14px;
+}
+
+.question{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(16,20,37,.9);
+}
+
+.question.correct{
+    border-color:rgba(45,212,160,.28);
+}
+
+.question.wrong{
+    border-color:rgba(255,93,115,.25);
+}
+
+.qtitle{
+    font-size:14px;
+    font-weight:800;
+    line-height:1.6;
+}
+
+.options{
+    display:grid;
+    gap:8px;
+    margin-top:14px;
+}
+
+.option{
+    padding:11px 13px;
+    border:1px solid transparent;
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    color:#d4d9e7;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.option.selected{
+    border-color:rgba(118,92,255,.45);
+}
+
+.option.correct-answer{
+    border-color:rgba(45,212,160,.4);
+    color:#8ce8cb;
+}
+
+.answers{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+}
+
+.badge{
+    padding:7px 10px;
+    border-radius:8px;
+    background:rgba(255,255,255,.05);
+    color:#cfd4e2;
+    font-size:9px;
+    font-weight:900;
+}
+
+.badge.good{
+    background:rgba(45,212,160,.09);
+    color:#77e4c2;
+}
+
+.badge.bad{
+    background:rgba(255,93,115,.09);
+    color:#ff9aa9;
+}
+
+.empty{
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(16,20,37,.9);
+    color:var(--muted);
+    text-align:center;
+    font-size:12px;
+}
+
+@media(max-width:700px){
+    body{padding:16px}
+    .summary{grid-template-columns:1fr}
+    .title{font-size:22px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+        <div>
+            <div class="title">My Quiz Script</div>
+            <div class="subtitle" id="quizTitle">
+                Loading...
+            </div>
+        </div>
+
+        <a class="back" href="/student/dashboard">
+            ← BACK TO DASHBOARD
+        </a>
+    </div>
+
+    <div id="content">
+        <div class="empty">
+            Loading your script...
+        </div>
+    </div>
+
+</div>
+
+<script>
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function formatTime(seconds){
+    const total = Number(seconds || 0);
+    const minutes = Math.floor(total / 60);
+    const secs = total % 60;
+    return `${minutes}m ${String(secs).padStart(2,"0")}s`;
+}
+
+async function api(path){
+    const response = await fetch(path, {
+        credentials:"same-origin"
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+        throw new Error(
+            data.error ||
+            data.message ||
+            "Request failed"
+        );
+    }
+
+    return data;
+}
+
+async function loadScript(){
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const quizId =
+        params.get("quiz_id");
+
+    const content =
+        document.getElementById("content");
+
+    if(!quizId){
+
+        content.innerHTML = `
+            <div class="empty">
+                No quiz was selected.
+            </div>
+        `;
+
+        return;
+    }
+
+    try{
+
+        const data =
+            await api(
+                "/api/student/script/" +
+                encodeURIComponent(quizId)
+            );
+
+        if(!data.revealed){
+
+            content.innerHTML = `
+                <div class="empty">
+                    Your script has not been declared yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        document.getElementById("quizTitle").textContent =
+            data.quiz?.title || "Quiz";
+
+        const summary =
+            data.summary || {};
+
+        const script =
+            data.script || [];
+
+        content.innerHTML = `
+
+            <div class="summary">
+
+                <div class="stat">
+                    <span>SCORE</span>
+                    <strong>
+                        ${summary.score ?? 0}/${summary.total_questions ?? 0}
+                    </strong>
+                </div>
+
+                <div class="stat">
+                    <span>ANSWERED</span>
+                    <strong>
+                        ${summary.answered_questions ?? 0}/${summary.total_questions ?? 0}
+                    </strong>
+                </div>
+
+                <div class="stat">
+                    <span>TOTAL TIME</span>
+                    <strong>
+                        ${formatTime(summary.total_time_taken)}
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="script">
+
+                ${
+                    script.length
+                    ?
+                    script.map((q) => {
+
+                        const options =
+                            q.options || {};
+
+                        const status =
+                            q.submitted_answer == null
+                            ? "NOT ANSWERED"
+                            : q.is_correct
+                                ? "CORRECT"
+                                : "WRONG";
+
+                        const cls =
+                            q.is_correct
+                            ? "correct"
+                            : "wrong";
+
+                        return `
+                            <article class="question ${cls}">
+
+                                <div class="qtitle">
+                                    Q${q.number}.
+                                    ${escapeHTML(
+                                        q.question_text || ""
+                                    )}
+                                </div>
+
+                                <div class="options">
+
+                                    ${
+                                        ["A","B","C","D"].map(letter => {
+
+                                            const value =
+                                                options[letter] || "";
+
+                                            const selected =
+                                                q.submitted_answer != null &&
+                                                String(q.submitted_answer)
+                                                    .trim()
+                                                    .toUpperCase()
+                                                === letter;
+
+                                            const correct =
+                                                q.correct_answer != null &&
+                                                String(q.correct_answer)
+                                                    .trim()
+                                                    .toUpperCase()
+                                                === letter;
+
+                                            return `
+                                                <div class="
+                                                    option
+                                                    ${selected ? "selected" : ""}
+                                                    ${correct ? "correct-answer" : ""}
+                                                ">
+                                                    <b>${letter}.</b>
+                                                    ${escapeHTML(value)}
+                                                    ${selected ? " — Your answer" : ""}
+                                                    ${correct ? " — Correct answer" : ""}
+                                                </div>
+                                            `;
+                                        }).join("")
+                                    }
+
+                                </div>
+
+                                <div class="answers">
+
+                                    <span class="badge ${
+                                        q.is_correct
+                                        ? "good"
+                                        : "bad"
+                                    }">
+                                        ${status}
+                                    </span>
+
+                                    <span class="badge">
+                                        Your answer:
+                                        ${
+                                            q.submitted_answer == null
+                                            ? "Not answered"
+                                            : escapeHTML(
+                                                String(
+                                                    q.submitted_answer
+                                                )
+                                            )
+                                        }
+                                    </span>
+
+                                    <span class="badge good">
+                                        Correct:
+                                        ${escapeHTML(
+                                            String(
+                                                q.correct_answer || ""
+                                            )
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            </article>
+                        `;
+
+                    }).join("")
+                    :
+                    `
+                        <div class="empty">
+                            No script data available.
+                        </div>
+                    `
+                }
+
+            </div>
+        `;
+
+    }catch(error){
+
+        console.error(error);
+
+        content.innerHTML = `
+            <div class="empty">
+                Unable to load your script right now.
+            </div>
+        `;
+    }
+}
+
+loadScript();
+</script>
+
+</body>
+</html>

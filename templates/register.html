@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Quiz Arena | Register
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        :root {
+
+            --bg: #070914;
+            --panel: #101425;
+            --border: rgba(255,255,255,0.09);
+
+            --text: #f7f8ff;
+            --muted: #8d96ad;
+
+            --primary: #765cff;
+            --primary2: #9b82ff;
+
+            --danger: #ff5d73;
+            --success: #2dd4a0;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(118,92,255,0.22),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(45,212,160,0.08),
+                    transparent 25%
+                ),
+
+                var(--bg);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 24px;
+
+        }
+
+
+        /* =========================================
+           CARD
+        ========================================= */
+
+        .card {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            padding: 40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 28px;
+
+            background:
+                rgba(16,20,37,0.92);
+
+            backdrop-filter:
+                blur(24px);
+
+            box-shadow:
+                0 35px 100px
+                rgba(0,0,0,0.45);
+
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .logo {
+
+            width: 64px;
+            height: 64px;
+
+            margin:
+                0 auto 16px;
+
+            border-radius: 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 26px;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary2)
+                );
+
+            box-shadow:
+                0 15px 40px
+                rgba(118,92,255,0.30);
+
+        }
+
+
+        /* =========================================
+           HEADING
+        ========================================= */
+
+        h1 {
+
+            text-align: center;
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .sub {
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-top: 8px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .error {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 13px 14px;
+
+            border-radius: 11px;
+
+            color: #ff9aa9;
+
+            background:
+                rgba(255,93,115,0.08);
+
+            border:
+                1px solid
+                rgba(255,93,115,0.22);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            line-height: 1.5;
+
+        }
+
+
+        .error.show {
+
+            display: block;
+
+        }
+
+
+        /* =========================================
+           SUCCESS
+        ========================================= */
+
+        .success {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 13px 14px;
+
+            border-radius: 11px;
+
+            color: #7ee7c5;
+
+            background:
+                rgba(45,212,160,0.08);
+
+            border:
+                1px solid
+                rgba(45,212,160,0.20);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .success.show {
+
+            display: block;
+
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form {
+
+            margin-top: 28px;
+
+        }
+
+
+        .field {
+
+            margin-bottom: 17px;
+
+        }
+
+
+        .field label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 11px;
+
+            font-weight: 850;
+
+            color: #cfd4e2;
+
+            letter-spacing: 0.3px;
+
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            height: 50px;
+
+            padding:
+                0 15px;
+
+            border:
+                1px solid
+                var(--border);
+
+            outline: none;
+
+            border-radius: 11px;
+
+            color: white;
+
+            background:
+                rgba(5,8,18,0.75);
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        input::placeholder {
+
+            color: #626b82;
+
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(118,92,255,0.10);
+
+        }
+
+
+        select {
+
+            cursor: pointer;
+
+        }
+
+
+        select option {
+
+            background:
+                #101425;
+
+            color: white;
+
+        }
+
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        button {
+
+            width: 100%;
+
+            height: 52px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #8d70ff
+                );
+
+            font-weight: 900;
+
+            font-size: 13px;
+
+            letter-spacing: 0.2px;
+
+            cursor: pointer;
+
+            margin-top: 4px;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                opacity 0.2s;
+
+        }
+
+
+        button:hover:not(:disabled) {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(118,92,255,0.25);
+
+        }
+
+
+        button:active:not(:disabled) {
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =========================================
+           BOTTOM LINK
+        ========================================= */
+
+        .link {
+
+            text-align: center;
+
+            margin-top: 21px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+        }
+
+
+        .link a {
+
+            color: #bdb2ff;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+        }
+
+
+        .link a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media(max-width:560px) {
+
+            body {
+
+                padding: 15px;
+
+            }
+
+
+            .card {
+
+                padding:
+                    30px 21px;
+
+                border-radius: 23px;
+
+            }
+
+
+            h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        Q
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1>
+
+        Create Student Profile
+
+    </h1>
+
+
+    <p class="sub">
+
+        Register once and use your
+        roll number + year to login
+        for future quizzes.
+
+    </p>
+
+
+    <!-- ERROR -->
+
+    <div
+        class="error"
+        id="error">
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div
+        class="success"
+        id="success">
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form">
+
+
+        <!-- ROLL NUMBER -->
+
+        <div class="field">
+
+            <label>
+                ROLL NUMBER
+            </label>
+
+
+            <input
+                id="rollNo"
+
+                type="text"
+
+                placeholder="Example: 24A31A04O1"
+
+                autocomplete="off"
+
+                maxlength="30"
+            >
+
+        </div>
+
+
+        <!-- NAME -->
+
+        <div class="field">
+
+            <label>
+                FULL NAME
+            </label>
+
+
+            <input
+                id="name"
+
+                type="text"
+
+                placeholder="Enter your full name"
+
+                autocomplete="name"
+
+                maxlength="100"
+            >
+
+        </div>
+
+
+        <!-- SECTION -->
+
+        <div class="field">
+
+            <label>
+                SECTION
+            </label>
+
+
+            <input
+                id="section"
+
+                type="text"
+
+                placeholder="Example: A"
+
+                maxlength="10"
+
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- YEAR -->
+
+        <div class="field">
+
+            <label>
+                YEAR
+            </label>
+
+
+            <select id="year">
+
+                <option value="">
+                    Select year
+                </option>
+
+
+                <option value="1">
+                    1st Year
+                </option>
+
+
+                <option value="2">
+                    2nd Year
+                </option>
+
+
+                <option value="3">
+                    3rd Year
+                </option>
+
+
+                <option value="4">
+                    4th Year
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- REGISTER BUTTON -->
+
+        <button
+            id="registerBtn">
+
+            SAVE & CONTINUE →
+
+        </button>
+
+
+    </div>
+
+
+    <!-- LOGIN LINK -->
+
+    <div class="link">
+
+        Already registered?
+
+        <a href="/student/login">
+
+            Login
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const registerBtn =
+    document.getElementById(
+        "registerBtn"
+    );
+
+
+const errorBox =
+    document.getElementById(
+        "error"
+    );
+
+
+const successBox =
+    document.getElementById(
+        "success"
+    );
+
+
+/* =====================================================
+   SHOW ERROR
+===================================================== */
+
+function showError(message) {
+
+    errorBox.textContent =
+        message;
+
+    errorBox.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   HIDE ERROR
+===================================================== */
+
+function hideError() {
+
+    errorBox.textContent =
+        "";
+
+    errorBox.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   SHOW SUCCESS
+===================================================== */
+
+function showSuccess(message) {
+
+    successBox.textContent =
+        message;
+
+    successBox.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   HIDE SUCCESS
+===================================================== */
+
+function hideSuccess() {
+
+    successBox.textContent =
+        "";
+
+    successBox.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+registerBtn.addEventListener(
+    "click",
+    async function () {
+
+
+        hideError();
+
+        hideSuccess();
+
+
+        /* ---------------------------------------------
+           GET FORM VALUES
+        --------------------------------------------- */
+
+        const rollNo =
+            document
+            .getElementById("rollNo")
+            .value
+            .trim()
+            .toUpperCase();
+
+
+        const name =
+            document
+            .getElementById("name")
+            .value
+            .trim();
+
+
+        const section =
+            document
+            .getElementById("section")
+            .value
+            .trim()
+            .toUpperCase();
+
+
+        const year =
+            document
+            .getElementById("year")
+            .value;
+
+
+        /* ---------------------------------------------
+           VALIDATION
+        --------------------------------------------- */
+
+        if (!rollNo) {
+
+            showError(
+                "Please enter your roll number."
+            );
+
+            return;
+
+        }
+
+
+        if (!name) {
+
+            showError(
+                "Please enter your full name."
+            );
+
+            return;
+
+        }
+
+
+        if (!section) {
+
+            showError(
+                "Please enter your section."
+            );
+
+            return;
+
+        }
+
+
+        if (!year) {
+
+            showError(
+                "Please select your year."
+            );
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           DISABLE BUTTON
+        --------------------------------------------- */
+
+        registerBtn.disabled =
+            true;
+
+        registerBtn.textContent =
+            "SAVING...";
+
+
+        try {
+
+
+            /* -----------------------------------------
+               SEND DATA TO FLASK
+            ----------------------------------------- */
+
+            const response =
+                await fetch(
+                    "/api/student/register",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                roll_no:
+                                    rollNo,
+
+                                name:
+                                    name,
+
+                                section:
+                                    section,
+
+                                year:
+                                    year
+
+                            })
+
+                    }
+                );
+
+
+            /* -----------------------------------------
+               READ RESPONSE
+            ----------------------------------------- */
+
+            const data =
+                await response.json();
+
+
+            /* -----------------------------------------
+               HANDLE ERROR
+            ----------------------------------------- */
+
+            if (!response.ok) {
+
+                throw new Error(
+
+                    data.error ||
+
+                    "Registration failed."
+
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               SUCCESS
+            ----------------------------------------- */
+
+            showSuccess(
+                "Profile created successfully! Redirecting..."
+            );
+
+
+            registerBtn.textContent =
+                "SUCCESS ✓";
+
+
+            /*
+             * Flask creates the student session
+             * after successful registration.
+             *
+             * Therefore we can directly
+             * open the dashboard.
+             */
+
+            setTimeout(
+                function () {
+
+                    window.location.href =
+                        "/student/dashboard";
+
+                },
+                700
+            );
+
+
+        }
+        catch (error) {
+
+
+            console.error(
+                "REGISTRATION ERROR:",
+                error
+            );
+
+
+            showError(
+                error.message ||
+                "Something went wrong."
+            );
+
+
+            registerBtn.disabled =
+                false;
+
+
+            registerBtn.textContent =
+                "SAVE & CONTINUE →";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENTER KEY SUPPORT
+===================================================== */
+
+document
+.querySelectorAll(
+    "input, select"
+)
+.forEach(
+    function (element) {
+
+        element.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    registerBtn.click();
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ROLL NUMBER AUTO FORMAT
+===================================================== */
+
+document
+.getElementById("rollNo")
+.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+            .toUpperCase()
+            .replace(
+                /\s+/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =====================================================
+   SECTION AUTO FORMAT
+===================================================== */
+
+document
+.getElementById("section")
+.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value
+            .toUpperCase()
+            .trim();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

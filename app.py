@@ -81,7 +81,7 @@ def handle_supabase_error(function):
 def home():
     if session.get("student_id"):
         return redirect(url_for("student_dashboard"))
-    return render_template("login.html")
+    return render_template("register.html")
 
 
 @app.route("/student/login")
@@ -959,4 +959,8 @@ def page_not_found(error):
 # ============================================================
 
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=5001
+    )

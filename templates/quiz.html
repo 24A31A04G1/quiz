@@ -603,494 +603,6 @@
 
 
         /* =====================================================
-           START SCREEN
-        ===================================================== */
-
-        .quiz-start-screen {
-
-            position:
-                fixed;
-
-            inset:
-                0;
-
-            z-index:
-                200000;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            padding:
-                24px;
-
-            background:
-
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(118,92,255,0.25),
-                    transparent 32%
-                ),
-
-                radial-gradient(
-                    circle at 85% 85%,
-                    rgba(45,212,160,0.12),
-                    transparent 30%
-                ),
-
-                #070914;
-
-        }
-
-
-        .quiz-start-screen.hidden {
-
-            display:
-                none;
-
-        }
-
-
-        .quiz-start-card {
-
-            width:
-                100%;
-
-            max-width:
-                560px;
-
-            padding:
-                44px;
-
-            text-align:
-                center;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.10);
-
-            border-radius:
-                30px;
-
-            background:
-                rgba(16,20,37,0.96);
-
-            backdrop-filter:
-                blur(25px);
-
-            box-shadow:
-                0 40px 120px
-                rgba(0,0,0,0.55);
-
-        }
-
-
-        .quiz-start-icon {
-
-            width:
-                80px;
-
-            height:
-                80px;
-
-            margin:
-                0 auto 18px;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            border-radius:
-                23px;
-
-            color:
-                white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--primary),
-                    var(--primary2)
-                );
-
-            font-size:
-                32px;
-
-            font-weight:
-                900;
-
-            box-shadow:
-                0 18px 45px
-                rgba(118,92,255,0.30);
-
-        }
-
-
-        .quiz-start-badge {
-
-            display:
-                inline-block;
-
-            padding:
-                7px 13px;
-
-            margin-bottom:
-                14px;
-
-            border:
-                1px solid
-                rgba(118,92,255,0.20);
-
-            border-radius:
-                999px;
-
-            color:
-                #bdb2ff;
-
-            background:
-                rgba(118,92,255,0.09);
-
-            font-size:
-                10px;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                1px;
-
-        }
-
-
-        .quiz-start-card h1 {
-
-            font-size:
-                32px;
-
-            font-weight:
-                900;
-
-        }
-
-
-        .quiz-start-card > p {
-
-            max-width:
-                430px;
-
-            margin:
-                12px auto 24px;
-
-            color:
-                var(--muted);
-
-            font-size:
-                13px;
-
-            line-height:
-                1.7;
-
-        }
-
-
-        .quiz-rules {
-
-            display:
-                grid;
-
-            gap:
-                9px;
-
-            margin-bottom:
-                24px;
-
-            text-align:
-                left;
-
-        }
-
-
-        .quiz-rules div {
-
-            padding:
-                12px 14px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.06);
-
-            border-radius:
-                11px;
-
-            color:
-                #cdd2e0;
-
-            background:
-                rgba(255,255,255,0.03);
-
-            font-size:
-                11px;
-
-            font-weight:
-                700;
-
-        }
-
-
-        .quiz-rules span {
-
-            display:
-                inline-block;
-
-            width:
-                28px;
-
-            color:
-                #a996ff;
-
-            font-size:
-                14px;
-
-        }
-
-
-        .quiz-start-btn {
-
-            width:
-                100%;
-
-            height:
-                53px;
-
-        }
-
-
-        .fullscreen-error {
-
-            display:
-                none;
-
-            margin-top:
-                14px;
-
-            padding:
-                11px;
-
-            border:
-                1px solid
-                rgba(255,93,115,0.20);
-
-            border-radius:
-                10px;
-
-            color:
-                #ff9aa9;
-
-            background:
-                rgba(255,93,115,0.08);
-
-            font-size:
-                11px;
-
-            font-weight:
-                700;
-
-        }
-
-
-        .fullscreen-error.show {
-
-            display:
-                block;
-
-        }
-
-
-        /* =====================================================
-           FULLSCREEN WARNING
-        ===================================================== */
-
-        #fullscreenWarning {
-
-            position:
-                fixed;
-
-            inset:
-                0;
-
-            z-index:
-                999999;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            padding:
-                25px;
-
-            background:
-                rgba(7,9,20,0.97);
-
-            backdrop-filter:
-                blur(15px);
-
-        }
-
-
-        .fullscreen-warning-card {
-
-            width:
-                100%;
-
-            max-width:
-                450px;
-
-            padding:
-                38px;
-
-            text-align:
-                center;
-
-            border:
-                1px solid
-                rgba(255,93,115,0.25);
-
-            border-radius:
-                25px;
-
-            background:
-                #101425;
-
-            box-shadow:
-                0 30px 100px
-                rgba(0,0,0,0.6);
-
-        }
-
-
-        .warning-icon {
-
-            width:
-                70px;
-
-            height:
-                70px;
-
-            margin:
-                0 auto 20px;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            border-radius:
-                50%;
-
-            color:
-                white;
-
-            background:
-                rgba(255,93,115,0.15);
-
-            border:
-                1px solid
-                rgba(255,93,115,0.30);
-
-            font-size:
-                30px;
-
-        }
-
-
-        .fullscreen-warning-card h2 {
-
-            margin-bottom:
-                12px;
-
-            font-size:
-                27px;
-
-        }
-
-
-        .fullscreen-warning-card p {
-
-            color:
-                #ff9aa9;
-
-            font-size:
-                15px;
-
-            font-weight:
-                700;
-
-        }
-
-
-        .warning-small {
-
-            margin-top:
-                8px;
-
-            color:
-                #8d96ad !important;
-
-            font-size:
-                12px !important;
-
-            line-height:
-                1.6;
-
-        }
-
-
-        .warning-loader {
-
-            margin-top:
-                25px;
-
-            padding:
-                12px;
-
-            border-radius:
-                10px;
-
-            color:
-                #bdb2ff;
-
-            background:
-                rgba(118,92,255,0.08);
-
-            font-size:
-                11px;
-
-            font-weight:
-                800;
-
-        }
-
-
-        /* =====================================================
            COMPLETION SCREEN
         ===================================================== */
 
@@ -1508,96 +1020,6 @@
 
 
 <!-- =====================================================
-     START SCREEN
-===================================================== -->
-
-<div
-    class="quiz-start-screen"
-    id="quizStartScreen">
-
-
-    <div class="quiz-start-card">
-
-
-        <div class="quiz-start-icon">
-            Q
-        </div>
-
-
-        <div class="quiz-start-badge">
-            QUIZ READY
-        </div>
-
-
-        <h1>
-            Ready to Begin?
-        </h1>
-
-
-        <p>
-            Click the button below to enter fullscreen
-            and start the quiz.
-        </p>
-
-
-        <div class="quiz-rules">
-
-
-            <div>
-                <span>⏱</span>
-                Each question has its own timer
-            </div>
-
-
-            <div>
-                <span>🔀</span>
-                Questions are randomly shuffled
-            </div>
-
-
-            <div>
-                <span>⛶</span>
-                Exiting fullscreen automatically submits
-            </div>
-
-
-            <div>
-                <span>→</span>
-                Timer expiry moves to the next question
-            </div>
-
-
-            <div>
-                <span>✓</span>
-                Last question timer expiry submits the quiz
-            </div>
-
-
-        </div>
-
-
-        <button
-            type="button"
-            id="startQuizBtn"
-            class="quiz-start-btn">
-
-            ENTER FULLSCREEN & START QUIZ →
-
-        </button>
-
-
-        <div
-            class="fullscreen-error"
-            id="fullscreenError">
-        </div>
-
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
      QUIZ
 ===================================================== -->
 
@@ -1868,9 +1290,9 @@ let started = false;
 
 let submitting = false;
 
-let quizReady = false;
+let tabSwitchSubmitted = false;
 
-let forcedByFullscreenExit = false;
+let quizFinished = false;
 
 // Total quiz duration tracking.
 // This is the only time value saved to the database.
@@ -2084,15 +1506,12 @@ async function init() {
         }
 
 
-        /*
-            Fullscreen is NOT requested here.
-
-            It must be requested from the
-            user's Start button click.
-        */
-
-        quizReady =
-            true;
+        // Quiz starts automatically after the questions are loaded.
+        started = true;
+        submitting = false;
+        quizStartTime = Date.now();
+        totalTimeTaken = 0;
+        showQuestion();
 
 
     }
@@ -2116,155 +1535,6 @@ async function init() {
     }
 
 }
-
-
-/* =====================================================
-   START QUIZ
-===================================================== */
-
-$("startQuizBtn")
-    .addEventListener(
-        "click",
-        async () => {
-
-
-            if (
-                !quizReady
-            ) {
-
-                return;
-
-            }
-
-
-            const button =
-                $("startQuizBtn");
-
-
-            const errorBox =
-                $("fullscreenError");
-
-
-            errorBox
-                .classList
-                .remove(
-                    "show"
-                );
-
-
-            errorBox.textContent =
-                "";
-
-
-            button.disabled =
-                true;
-
-
-            button.textContent =
-                "ENTERING FULLSCREEN...";
-
-
-            try {
-
-
-                /*
-                    Fullscreen request is directly
-                    inside the button click.
-                */
-
-                if (
-                    !document.fullscreenElement
-                ) {
-
-
-                    await document
-                        .documentElement
-                        .requestFullscreen();
-
-                }
-
-
-                if (
-                    !document.fullscreenElement
-                ) {
-
-
-                    throw new Error(
-                        "Fullscreen could not be activated."
-                    );
-
-                }
-
-
-                $("quizStartScreen")
-                    .classList
-                    .add(
-                        "hidden"
-                    );
-
-
-                started =
-                    true;
-
-
-                submitting =
-                    false;
-
-
-                forcedByFullscreenExit =
-                    false;
-
-
-                /*
-                    Start TOTAL QUIZ timer.
-
-                    This is different from the per-question timer.
-                    We save only the total duration in the database.
-                */
-
-                quizStartTime = Date.now();
-                totalTimeTaken = 0;
-
-
-                /*
-                    Start first question.
-                */
-
-                showQuestion();
-
-
-            }
-            catch (error) {
-
-
-                console.error(
-                    "FULLSCREEN ERROR:",
-                    error
-                );
-
-
-                button.disabled =
-                    false;
-
-
-                button.textContent =
-                    "ENTER FULLSCREEN & START QUIZ →";
-
-
-                errorBox.textContent =
-                    "Fullscreen permission is required. Please click the button again and allow fullscreen.";
-
-
-                errorBox
-                    .classList
-                    .add(
-                        "show"
-                    );
-
-            }
-
-        }
-    );
 
 
 /* =====================================================
@@ -2736,7 +2006,81 @@ $("next")
    SUBMIT QUIZ
 ===================================================== */
 
-async function submitQuiz() {
+
+/* =====================================================
+   TAB SWITCH / LEAVING QUIZ
+   If the student changes tabs or leaves the quiz page,
+   show a warning and submit immediately.
+   ===================================================== */
+
+function handleTabSwitch() {
+
+    if (
+        !started ||
+        submitting ||
+        tabSwitchSubmitted ||
+        quizFinished
+    ) {
+        return;
+    }
+
+    tabSwitchSubmitted = true;
+
+    alert(
+        "Warning: You left the quiz tab. Your quiz will be submitted automatically."
+    );
+
+    submitQuiz(true);
+}
+
+
+/*
+ * visibilitychange fires when the browser tab becomes hidden.
+ */
+
+/*
+ * pagehide is a fallback for leaving/navigating away from the document.
+ */
+window.addEventListener(
+    "pagehide",
+    function () {
+
+        if (
+            document.visibilityState === "hidden"
+        ) {
+
+            handleTabSwitch();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (
+            document.visibilityState === "hidden"
+        ) {
+
+            handleTabSwitch();
+
+        }
+
+    }
+);
+
+
+/*
+ * blur catches cases where the browser/window loses focus.
+ * We do not submit immediately on every blur because clicking
+ * normal quiz controls can also briefly blur the window.
+ * visibilitychange above is the primary tab-switch detector.
+ */
+
+async function submitQuiz(autoSubmitted = false) {
 
 
     if (
@@ -2769,8 +2113,7 @@ async function submitQuiz() {
     /*
         Calculate total quiz time in seconds.
 
-        From the moment the student clicks
-        "ENTER FULLSCREEN & START QUIZ"
+        From the moment the quiz starts
         until submit is triggered.
 
         This includes time spent on all questions.
@@ -2828,7 +2171,14 @@ async function submitQuiz() {
                         total_time_taken:
                             totalTimeTaken
 
-                    })
+                    }),
+
+                /*
+                    keepalive lets the browser finish the request even
+                    when the tab has just become hidden.
+                */
+                keepalive:
+                    true
 
             }
         );
@@ -2847,57 +2197,24 @@ async function submitQuiz() {
         started =
             false;
 
-
-        /*
-            Exit fullscreen after submission.
-        */
-
-        if (
-            document.fullscreenElement
-        ) {
-
-
-            try {
-
-
-                await document
-                    .exitFullscreen();
-
-
-            }
-            catch (
-                error
-            ) {
-
-
-                console.log(
-                    "Fullscreen exit:",
-                    error
-                );
-
-            }
-
-        }
+        quizFinished =
+            true;
 
 
         /*
-            Different message if the student
-            exited fullscreen.
+            Show a specific completion message for
+            an automatic tab-switch submission.
         */
 
-        if (
-            forcedByFullscreenExit
-        ) {
-
+        if (autoSubmitted) {
 
             $("completionMessage")
                 .textContent =
-                "Your quiz was automatically submitted.";
-
+                "Quiz submitted automatically.";
 
             $("completionSub")
                 .textContent =
-                "You exited fullscreen mode, so the quiz was automatically submitted with the answers you had given so far.";
+                "You left the quiz tab, so your answers were submitted with the answers given up to that point.";
 
         }
 
@@ -2953,134 +2270,6 @@ async function submitQuiz() {
         );
 
     }
-
-}
-
-
-/* =====================================================
-   FULLSCREEN EXIT
-===================================================== */
-
-document.addEventListener(
-    "fullscreenchange",
-    () => {
-
-
-        /*
-            If the student manually exits fullscreen,
-            submit immediately.
-        */
-
-        if (
-            started &&
-            !document.fullscreenElement &&
-            !submitting
-        ) {
-
-
-            forcedByFullscreenExit =
-                true;
-
-
-            /*
-                Show clear warning.
-            */
-
-            showFullscreenWarning();
-
-
-            /*
-                Automatically submit.
-            */
-
-            submitQuiz();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   FULLSCREEN WARNING
-===================================================== */
-
-function showFullscreenWarning() {
-
-
-    /*
-        Don't create it twice.
-    */
-
-    if (
-        $("fullscreenWarning")
-    ) {
-
-        return;
-
-    }
-
-
-    const warning =
-        document.createElement(
-            "div"
-        );
-
-
-    warning.id =
-        "fullscreenWarning";
-
-
-    warning.innerHTML = `
-
-        <div class="fullscreen-warning-card">
-
-
-            <div class="warning-icon">
-
-                ⚠
-
-            </div>
-
-
-            <h2>
-
-                Quiz Submitted
-
-            </h2>
-
-
-            <p>
-
-                You exited fullscreen mode.
-
-            </p>
-
-
-            <p class="warning-small">
-
-                For security reasons, your quiz is being
-                automatically submitted with the answers
-                you have given so far.
-
-            </p>
-
-
-            <div class="warning-loader">
-
-                Submitting your answers...
-
-            </div>
-
-
-        </div>
-
-    `;
-
-
-    document.body.appendChild(
-        warning
-    );
 
 }
 

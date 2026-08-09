@@ -1291,8 +1291,9 @@ let started = false;
 let submitting = false;
 
 let tabSwitchSubmitted = false;
-
 let quizFinished = false;
+let pageIsBeingReloaded = false;
+let tabSwitchTimer = null;
 
 // Total quiz duration tracking.
 // This is the only time value saved to the database.
@@ -2008,10 +2009,30 @@ $("next")
 
 
 /* =====================================================
-   TAB SWITCH / LEAVING QUIZ
-   If the student changes tabs or leaves the quiz page,
-   show a warning and submit immediately.
+   TAB SWITCH ONLY
+   Refresh / F5 must NOT submit.
+   Another browser tab staying hidden DOES submit.
    ===================================================== */
+
+/*
+ * Refresh/reload/navigation fires beforeunload.
+ * A normal tab switch does not.
+ */
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        pageIsBeingReloaded = true;
+
+        clearTimeout(
+            tabSwitchTimer
+        );
+
+        tabSwitchTimer = null;
+
+    }
+);
+
 
 function handleTabSwitch() {
 
@@ -2019,66 +2040,100 @@ function handleTabSwitch() {
         !started ||
         submitting ||
         tabSwitchSubmitted ||
-        quizFinished
+        quizFinished ||
+        pageIsBeingReloaded
     ) {
         return;
     }
 
+
     tabSwitchSubmitted = true;
 
+
+    /*
+     * Warning first.
+     * Then submit automatically.
+     */
     alert(
-        "Warning: You left the quiz tab. Your quiz will be submitted automatically."
+        "Warning: You switched to another tab. Your quiz will be submitted automatically."
     );
 
-    submitQuiz(true);
+
+    submitQuiz(
+        true
+    );
+
 }
 
 
 /*
- * visibilitychange fires when the browser tab becomes hidden.
+ * visibilitychange detects an actual browser-tab switch.
  */
-
-/*
- * pagehide is a fallback for leaving/navigating away from the document.
- */
-window.addEventListener(
-    "pagehide",
-    function () {
-
-        if (
-            document.visibilityState === "hidden"
-        ) {
-
-            handleTabSwitch();
-
-        }
-
-    }
-);
-
-
 document.addEventListener(
     "visibilitychange",
     function () {
 
         if (
-            document.visibilityState === "hidden"
+            document.visibilityState !== "hidden"
         ) {
 
-            handleTabSwitch();
+            clearTimeout(
+                tabSwitchTimer
+            );
+
+            tabSwitchTimer = null;
+
+            return;
 
         }
+
+
+        if (
+            !started ||
+            submitting ||
+            tabSwitchSubmitted ||
+            quizFinished
+        ) {
+
+            return;
+
+        }
+
+
+        clearTimeout(
+            tabSwitchTimer
+        );
+
+
+        /*
+         * Give refresh/F5 time to fire beforeunload.
+         * If beforeunload fires, pageIsBeingReloaded becomes true
+         * and this callback will not submit.
+         */
+        tabSwitchTimer =
+            setTimeout(
+                function () {
+
+                    if (
+                        document.visibilityState === "hidden" &&
+                        !pageIsBeingReloaded &&
+                        started &&
+                        !submitting &&
+                        !tabSwitchSubmitted &&
+                        !quizFinished
+                    ) {
+
+                        handleTabSwitch();
+
+                    }
+
+                },
+                500
+            );
 
     }
 );
 
-
-/*
- * blur catches cases where the browser/window loses focus.
- * We do not submit immediately on every blur because clicking
- * normal quiz controls can also briefly blur the window.
- * visibilitychange above is the primary tab-switch detector.
- */
 
 async function submitQuiz(autoSubmitted = false) {
 
@@ -2173,10 +2228,6 @@ async function submitQuiz(autoSubmitted = false) {
 
                     }),
 
-                /*
-                    keepalive lets the browser finish the request even
-                    when the tab has just become hidden.
-                */
                 keepalive:
                     true
 
@@ -2199,24 +2250,6 @@ async function submitQuiz(autoSubmitted = false) {
 
         quizFinished =
             true;
-
-
-        /*
-            Show a specific completion message for
-            an automatic tab-switch submission.
-        */
-
-        if (autoSubmitted) {
-
-            $("completionMessage")
-                .textContent =
-                "Quiz submitted automatically.";
-
-            $("completionSub")
-                .textContent =
-                "You left the quiz tab, so your answers were submitted with the answers given up to that point.";
-
-        }
 
 
         /*

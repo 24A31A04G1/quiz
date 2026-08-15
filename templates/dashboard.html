@@ -435,22 +435,395 @@ body:after{
 }
 .notice-badge.live{background:rgba(61,255,189,.08);color:#7fffd0;border-color:rgba(61,255,189,.16)}
 
-.winner-list{display:grid;gap:9px}
-.winner-row{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:12px 14px;
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:rgba(6,22,34,.7);
-    font-size:11px;
-    box-shadow:5px 7px 12px rgba(0,0,0,.2);
+
+/* =========================
+   FULL-SCREEN WINNERS CELEBRATION
+   ========================= */
+
+.qualification-hero{
+    position:relative;
+    overflow:hidden;
+    margin-bottom:22px;
+    padding:34px 28px 30px;
+    border:1px solid rgba(67,231,255,.30);
+    border-radius:24px;
+    text-align:center;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(67,231,255,.18),transparent 32%),
+        linear-gradient(145deg,rgba(12,38,57,.96),rgba(3,13,23,.97));
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.42),
+        0 0 55px rgba(67,231,255,.12),
+        inset 1px 1px 0 rgba(255,255,255,.06);
+    animation:qualificationReveal .65s ease both;
 }
-.winner-position{font-size:18px;font-weight:900;color:#bcaeff;min-width:55px;text-align:right}
-.winner-main{display:flex;align-items:center;gap:12px}
-.winner-stats{display:flex;align-items:center;gap:14px}
-.winner-score{font-weight:900;color:#7fffd0}
-.winner-time,.time{font-size:10px;color:#a5bfcc;white-space:nowrap}
-.winner-row strong{color:#fff}
+
+.qualification-hero:before,
+.qualification-hero:after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.qualification-hero:before{
+    width:280px;height:280px;
+    left:-140px;top:-180px;
+    border:1px solid rgba(67,231,255,.18);
+    box-shadow:
+        0 0 0 22px rgba(67,231,255,.025),
+        0 0 0 44px rgba(67,231,255,.018),
+        0 0 50px rgba(67,231,255,.08);
+}
+
+.qualification-hero:after{
+    width:230px;height:230px;
+    right:-115px;bottom:-150px;
+    border:1px solid rgba(141,108,255,.20);
+    box-shadow:
+        0 0 0 20px rgba(141,108,255,.025),
+        0 0 0 40px rgba(141,108,255,.015),
+        0 0 50px rgba(141,108,255,.08);
+}
+
+/* Full celebration field */
+.celebration-rays{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    pointer-events:none;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 42%,rgba(67,231,255,.055),transparent 30%),
+        radial-gradient(circle at 20% 70%,rgba(141,108,255,.045),transparent 28%),
+        radial-gradient(circle at 82% 72%,rgba(61,255,189,.045),transparent 28%);
+}
+
+/* Firework bursts */
+.celebration-rays span{
+    position:absolute;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#bdfbff;
+    box-shadow:
+        0 0 6px #43e7ff,
+        0 0 16px #43e7ff,
+        0 0 30px rgba(67,231,255,.8);
+    animation:firework 2.8s ease-out infinite;
+}
+
+/* Each span becomes a burst with many rays through box-shadow */
+.celebration-rays span:before,
+.celebration-rays span:after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:4px;
+    height:105px;
+    transform-origin:50% 0;
+    border-radius:999px;
+    background:linear-gradient(to bottom,#dfffff,rgba(67,231,255,.65),transparent);
+    box-shadow:
+        0 0 8px #43e7ff,
+        0 0 15px rgba(67,231,255,.55);
+}
+
+.celebration-rays span:before{
+    transform:translate(-50%,0) rotate(0deg);
+}
+.celebration-rays span:after{
+    transform:translate(-50%,0) rotate(90deg);
+}
+
+/* Four diagonal rays around every burst using additional shadows */
+.celebration-rays span:nth-child(1){
+    left:13%;top:23%;animation-delay:.1s;
+    box-shadow:0 0 6px #fff,0 0 16px #43e7ff,0 0 30px #43e7ff,
+               42px 42px 0 #7b61ff,-42px 42px 0 #3dffbd,
+               42px -42px 0 #43e7ff,-42px -42px 0 #c9baff;
+}
+.celebration-rays span:nth-child(2){
+    left:84%;top:21%;animation-delay:.8s;
+    background:#d5caff;
+    box-shadow:0 0 6px #fff,0 0 17px #8d6cff,0 0 32px #8d6cff,
+               40px 40px 0 #43e7ff,-40px 40px 0 #3dffbd,
+               40px -40px 0 #ff79bd,-40px -40px 0 #c9baff;
+}
+.celebration-rays span:nth-child(3){
+    left:24%;top:76%;animation-delay:1.35s;
+    background:#8effd5;
+    box-shadow:0 0 6px #fff,0 0 17px #3dffbd,0 0 32px #3dffbd,
+               44px 44px 0 #43e7ff,-44px 44px 0 #8d6cff,
+               44px -44px 0 #ffcf66,-44px -44px 0 #43e7ff;
+}
+.celebration-rays span:nth-child(4){
+    left:76%;top:74%;animation-delay:1.8s;
+    background:#ffe08a;
+    box-shadow:0 0 6px #fff,0 0 17px #ffcf66,0 0 32px #ffcf66,
+               44px 44px 0 #ff79bd,-44px 44px 0 #43e7ff,
+               44px -44px 0 #3dffbd,-44px -44px 0 #8d6cff;
+}
+.celebration-rays span:nth-child(5){
+    left:49%;top:12%;animation-delay:2.2s;
+    background:#ffb9dc;
+    box-shadow:0 0 6px #fff,0 0 17px #ff79bd,0 0 32px #ff79bd,
+               44px 44px 0 #43e7ff,-44px 44px 0 #3dffbd,
+               44px -44px 0 #8d6cff,-44px -44px 0 #ffcf66;
+}
+.celebration-rays span:nth-child(6){
+    left:51%;top:83%;animation-delay:2.55s;
+    background:#a7f6ff;
+    box-shadow:0 0 6px #fff,0 0 17px #43e7ff,0 0 32px #43e7ff,
+               42px 42px 0 #ff79bd,-42px 42px 0 #8d6cff,
+               42px -42px 0 #3dffbd,-42px -42px 0 #ffcf66;
+}
+
+.qualification-icon{
+    position:relative;
+    z-index:100001;
+    width:84px;height:84px;
+    margin:0 auto 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(61,255,189,.48);
+    border-radius:50%;
+    color:#03150f;
+    background:linear-gradient(145deg,#c0ffe9,#3dffbd);
+    box-shadow:
+        0 0 0 8px rgba(61,255,189,.055),
+        0 0 38px rgba(61,255,189,.35),
+        inset 2px 2px 6px rgba(255,255,255,.7);
+    font-size:39px;
+    font-weight:950;
+    animation:medalPop .8s cubic-bezier(.2,1.5,.35,1) both;
+}
+
+.qualification-kicker{
+    position:relative;
+    z-index:100001;
+    display:inline-block;
+    padding:7px 13px;
+    margin-bottom:11px;
+    border:1px solid rgba(61,255,189,.22);
+    border-radius:999px;
+    color:#79ffd2;
+    background:rgba(61,255,189,.08);
+    font-size:9px;
+    font-weight:950;
+    letter-spacing:1.7px;
+}
+
+.qualification-title{
+    position:relative;
+    z-index:100001;
+    color:#f5feff;
+    font-size:30px;
+    font-weight:950;
+    line-height:1.18;
+    text-shadow:0 0 20px rgba(67,231,255,.22),0 3px 18px rgba(0,0,0,.35);
+}
+
+.qualification-title .highlight{
+    color:#5fffd0;
+    text-shadow:0 0 20px rgba(61,255,189,.42);
+}
+
+.qualification-divider{
+    position:relative;
+    z-index:100001;
+    width:min(430px,80%);
+    height:1px;
+    margin:20px auto 0;
+    background:linear-gradient(90deg,transparent,#43e7ff,transparent);
+    box-shadow:0 0 14px rgba(67,231,255,.3);
+}
+
+.qualification-subtitle{
+    position:relative;
+    z-index:100001;
+    margin-top:14px;
+    color:#dffcff;
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.4px;
+}
+
+@keyframes qualificationReveal{
+    from{opacity:0;transform:translateY(15px) scale(.97)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes medalPop{
+    0%{opacity:0;transform:scale(.3) rotate(-18deg)}
+    65%{transform:scale(1.12) rotate(4deg)}
+    100%{opacity:1;transform:scale(1) rotate(0)}
+}
+
+@keyframes firework{
+    0%{opacity:0;transform:scale(.2)}
+    10%{opacity:1;transform:scale(1)}
+    35%{opacity:.95;transform:scale(1.25)}
+    70%{opacity:.45;transform:scale(.8)}
+    100%{opacity:0;transform:scale(.25)}
+}
+
+@media(max-width:700px){
+    .qualification-hero{
+        padding:25px 15px 22px;
+        border-radius:19px;
+    }
+
+    .qualification-icon{
+        width:66px;height:66px;font-size:30px;
+    }
+
+    .qualification-title{
+        font-size:23px;
+    }
+
+    .qualification-subtitle{
+        font-size:10px;
+    }
+
+    .celebration-rays span:before,
+    .celebration-rays span:after{
+        height:75px;
+    }
+}
+
+
+.winner-table{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    background:rgba(4,15,25,.72);
+    box-shadow:0 14px 30px rgba(0,0,0,.28);
+}
+
+.winner-header,
+.winner-row{
+    display:grid;
+    grid-template-columns:70px minmax(180px,1.6fr) minmax(130px,1fr) 120px 130px;
+    align-items:center;
+    column-gap:14px;
+    min-width:690px;
+}
+
+.winner-header{
+    min-height:48px;
+    padding:0 18px;
+    color:#79ebff;
+    background:linear-gradient(90deg,rgba(67,231,255,.12),rgba(141,108,255,.08));
+    border-bottom:1px solid rgba(67,231,255,.22);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+}
+
+.winner-header > div:nth-child(4),
+.winner-header > div:nth-child(5){
+    text-align:center;
+}
+
+.winner-list{display:block}
+
+.winner-row{
+    min-height:64px;
+    padding:0 18px;
+    border-bottom:1px solid rgba(88,214,255,.10);
+    background:rgba(6,22,34,.68);
+    font-size:11px;
+    transition:.25s ease;
+}
+
+.winner-row:last-child{border-bottom:0}
+
+.winner-row:hover{
+    background:linear-gradient(90deg,rgba(67,231,255,.09),rgba(141,108,255,.05));
+}
+
+.winner-position{
+    font-size:17px;
+    font-weight:900;
+    color:#c8bbff;
+}
+
+.winner-name{min-width:0}
+
+.winner-name strong{
+    display:block;
+    color:#f3fdff;
+    font-size:12px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.winner-roll{
+    color:#a7c3cf;
+    font-size:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.winner-score{
+    justify-self:center;
+    min-width:76px;
+    padding:7px 10px;
+    border-radius:9px;
+    border:1px solid rgba(61,255,189,.20);
+    background:rgba(61,255,189,.07);
+    color:#7fffd0;
+    font-weight:900;
+    text-align:center;
+    white-space:nowrap;
+}
+
+.winner-time{
+    justify-self:center;
+    min-width:92px;
+    padding:7px 9px;
+    border-radius:9px;
+    border:1px solid rgba(67,231,255,.16);
+    background:rgba(67,231,255,.05);
+    color:#bcefff;
+    font-size:10px;
+    text-align:center;
+    white-space:nowrap;
+}
+
+@media(max-width:700px){
+    .winner-table{
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .winner-header,
+    .winner-row{
+        grid-template-columns:58px 145px 105px 82px 105px;
+        min-width:535px;
+        column-gap:8px;
+    }
+
+    .winner-header{
+        min-height:44px;
+        padding:0 10px;
+        font-size:8px;
+    }
+
+    .winner-row{
+        min-height:58px;
+        padding:0 10px;
+    }
+
+    .winner-name strong{font-size:11px}
+}
 
 .script-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:15px 0}
 .script-stat{
@@ -506,8 +879,8 @@ body:after{
     .tab{flex:1;white-space:nowrap}
     .grid{grid-template-columns:1fr}
     .quiz-card{min-height:auto}
-    .winner-row{align-items:flex-start;flex-direction:column}
-    .winner-stats{width:100%;justify-content:space-between}
+    
+    
 }
 
 /* Premium circuit traces */
@@ -980,14 +1353,13 @@ function formatTime(seconds) {
 }
 
 
-function renderWinners(data, quizzes) {
+function renderWinners(data, quizzes){
 
-    const box =
-        document.getElementById("winnersBox");
+    const box = document.getElementById("winnersBox");
 
-    if (!box) return;
+    if(!box) return;
 
-    if (!quizzes.length) {
+    if(!quizzes.length){
         box.innerHTML = `
             <div class="empty">
                 No quizzes available.
@@ -996,7 +1368,7 @@ function renderWinners(data, quizzes) {
         return;
     }
 
-    if (!data.revealed) {
+    if(!data.revealed){
         box.innerHTML = `
             <div class="empty">
                 Winners have not been declared yet.
@@ -1007,7 +1379,7 @@ function renderWinners(data, quizzes) {
 
     const winners = data.winners || [];
 
-    if (!winners.length) {
+    if(!winners.length){
         box.innerHTML = `
             <div class="empty">
                 No winners have been selected.
@@ -1017,54 +1389,85 @@ function renderWinners(data, quizzes) {
     }
 
     box.innerHTML = `
-        <h3 class="section-title">
-            🏆 ${escapeHTML(data.quiz.title)}
-        </h3>
+        <div class="qualification-hero">
 
-        <div class="winner-list">
+            <div class="celebration-rays" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
 
-            ${
-                winners.map(
-                    winner => `
-                        <div class="winner-row">
+            <div class="qualification-icon">✓</div>
 
-                            <div class="winner-main">
+            <div class="qualification-kicker">
+                LOGIC HUNT • RESULT DECLARED
+            </div>
+
+            <div class="qualification-title">
+                Congratulations!
+                <br>
+                <span class="highlight">
+                    You Qualified for Round 2
+                </span>
+            </div>
+
+            <p class="qualification-message">            </p>
+
+            <div class="qualification-divider"></div>
+
+            <div class="qualification-subtitle">
+                🏆 Qualified Participants — ${escapeHTML(data.quiz.title)}
+            </div>
+
+        </div>
+        <div class="winner-table">
+
+            <div class="winner-header">
+                <div>RANK</div>
+                <div>NAME</div>
+                <div>ROLL NO</div>
+                <div>MARKS</div>
+                <div>TIME TAKEN</div>
+            </div>
+
+            <div class="winner-list">
+
+                ${
+                    winners.map(
+                        winner => `
+                            <div class="winner-row">
 
                                 <div class="winner-position">
                                     #${winner.position}
                                 </div>
 
-                                <div>
+                                <div class="winner-name">
                                     <strong>
                                         ${escapeHTML(winner.name)}
                                     </strong>
+                                </div>
 
-                                    <br>
+                                <div class="winner-roll">
+                                    ${escapeHTML(winner.roll_no)}
+                                </div>
 
-                                    <span class="time">
-                                        ${escapeHTML(winner.roll_no)}
-                                    </span>
+                                <div class="winner-score">
+                                    ${winner.score}/${winner.total_questions}
+                                </div>
+
+                                <div class="winner-time">
+                                    ${formatTime(winner.total_time_taken)}
                                 </div>
 
                             </div>
+                        `
+                    ).join("")
+                }
 
-                            <div class="winner-stats">
-
-                                <span class="winner-score">
-                                    ${winner.score}/${winner.total_questions}
-                                </span>
-
-                                <span class="winner-time">
-                                    ${formatTime(winner.total_time_taken)}
-                                </span>
-
-                            </div>
-
-                        </div>
-                    `
-                ).join("")
-            }
-
+            </div>
         </div>
     `;
 }

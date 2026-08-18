@@ -294,6 +294,15 @@ body:after{
     text-shadow:0 2px 15px rgba(0,0,0,.25);
 }
 
+.question-image{
+    display:none;
+    max-width:100%;
+    max-height:420px;
+    margin:0 auto 25px;
+    border-radius:14px;
+    object-fit:contain;
+}
+
 .question:before{
     content:"";
     display:block;
@@ -950,6 +959,10 @@ button:disabled{
             id="questionText">
         </div>
 
+        <img
+            class="question-image"
+            id="questionImage"
+            alt="Question image">
 
         <div
             class="options"
@@ -1421,6 +1434,17 @@ function showQuestion() {
     $("questionText")
         .textContent =
         question.question_text;
+
+    const questionImage =
+        $("questionImage");
+
+    if (question.image_url) {
+        questionImage.src = question.image_url;
+        questionImage.style.display = "block";
+    } else {
+        questionImage.removeAttribute("src");
+        questionImage.style.display = "none";
+    }
 
 
     /*

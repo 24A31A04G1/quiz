@@ -365,7 +365,7 @@ def get_student_quiz(quiz_id):
         .table("questions")
         .select(
             "id,question_text,option_a,option_b,option_c,option_d,"
-            "question_order,time_limit"
+            "question_order,time_limit,image_url"
         )
         .eq("quiz_id", quiz_id)
         .order("question_order", desc=False)
